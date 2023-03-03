@@ -1,5 +1,6 @@
 import {
   IsEmail,
+  IsNotEmpty,
   IsString,
   Matches,
   MaxLength,
@@ -7,9 +8,11 @@ import {
 } from 'class-validator';
 
 export class CreateUserBody {
+  @IsNotEmpty()
   @IsEmail()
   email: string;
 
+  @IsNotEmpty()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
@@ -18,6 +21,7 @@ export class CreateUserBody {
   })
   password: string;
 
+  @IsNotEmpty()
   @IsString()
   name: string;
 }
