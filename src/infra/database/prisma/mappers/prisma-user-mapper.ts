@@ -15,7 +15,7 @@ export class PrismaUserMapper {
     return new User(
       {
         email: raw.email,
-        password: raw.password,
+        password: 'Password',
         name: raw.name,
       },
       raw.id,
