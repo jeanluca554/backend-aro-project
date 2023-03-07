@@ -23,9 +23,7 @@ export class UserController {
 
   @Get('from/:email')
   async getUserFromEmail(@Param('email') email: string) {
-    const { user } = await this.findUser.execute({
-      email,
-    });
+    const { user } = await this.findUser.execute({ email });
 
     return {
       user,

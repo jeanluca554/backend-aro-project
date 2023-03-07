@@ -8,5 +8,6 @@ import { FindUsers } from '@app/use-cases/user/find-user';
   imports: [DatabaseUserModule],
   controllers: [UserController],
   providers: [CreateUser, FindUsers],
+  exports: [FindUsers],
 })
 export class UserModule {}

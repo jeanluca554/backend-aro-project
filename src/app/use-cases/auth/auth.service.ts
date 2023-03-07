@@ -2,37 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@app/entities/user/user';
 import { UsersRepository } from '@app/repositories/user-repository';
 import * as bcrypt from 'bcrypt';
+import { FindUsers } from '../user/find-user';
+import { UnauthorizedError } from '../errors/unauthorized';
 
-interface SendAuthRequest {
+interface AuthRequest {
   email: string;
   password: string;
 }
 
-interface SendUsersResponse {
+interface AuthResponse {
   // id: string;
   // email: string;
   // name: string;
-  user: User;
+  user: User | undefined;
 }
 
 @Injectable()
 export class AuthService {
-  async validateUser(email: string, password: string) {
-    throw new Error('Method not implemented');
-    // const { email, password } = request;
+  constructor(private readonly findUser: FindUsers) {}
 
-    // const encryptedPassword = await bcrypt.hash(password, 10);
+  // async validateUser(request: AuthRequest): Promise<User | undefined> {
+  async validateUser(request: AuthRequest) {
+    const { email, password } = request;
 
-    // const user = new User({
-    //   email,
-    //   password: encryptedPassword,
-    //   name,
-    // });
+    const response = await this.findUser.execute({ email });
+    const passwordUser = response.user?.password;
 
-    // await this.usersRepository.create(user);
+    if (response.user) {
+      const isPasswordValid = await bcrypt.compare(password, passwordUser!);
 
-    // return {
-    //   user,
-    // };
+      if (isPasswordValid) {
+        return {
+          ...response.user,
+          password: undefined,
+        };
+      }
+    }
+
+    throw new UnauthorizedError();
   }
 }

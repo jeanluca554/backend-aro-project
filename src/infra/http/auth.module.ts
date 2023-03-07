@@ -6,9 +6,10 @@ import { FindUsers } from '@app/use-cases/user/find-user';
 import { AuthController } from './controllers/auth.controller';
 import { AuthService } from '@app/use-cases/auth/auth.service';
 import { LocalStrategy } from '@infra/guards/strategies/local.strategy';
+import { UserModule } from './user.module';
 
 @Module({
-  // imports: [DatabaseUserModule],
+  imports: [UserModule],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy],
 })

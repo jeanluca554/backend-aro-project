@@ -16,13 +16,15 @@ import { AuthService } from '@app/use-cases/auth/auth.service';
 
 @Controller()
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
   async login() {
-    // return this.authService.validateUser();
+    // const { email, password } = body;
+    // return this.authService.validateUser({ email, password });
+    return 'Realizar login';
   }
 
   // async login(@Body() body: CreateUserBody) {
