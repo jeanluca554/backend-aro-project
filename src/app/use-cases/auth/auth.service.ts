@@ -4,38 +4,48 @@ import { UsersRepository } from '@app/repositories/user-repository';
 import * as bcrypt from 'bcrypt';
 import { FindUsers } from '../user/find-user';
 import { UnauthorizedError } from '../errors/unauthorized';
+import { PrismaUserMapper } from '@infra/database/prisma/mappers/prisma-user-mapper';
+import { UserPayload } from '@app/models/UserPayload';
+import { JwtService } from '@nestjs/jwt';
+import { UserToken } from '@app/models/UserToken';
 
 interface AuthRequest {
   email: string;
   password: string;
 }
 
-interface AuthResponse {
-  // id: string;
-  // email: string;
-  // name: string;
-  user: User | undefined;
-}
-
 @Injectable()
 export class AuthService {
-  constructor(private readonly findUser: FindUsers) {}
+  constructor(
+    private readonly findUser: FindUsers,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  // async validateUser(request: AuthRequest): Promise<User | undefined> {
+  login(user: User): UserToken {
+    const payload: UserPayload = {
+      sub: user.id,
+      email: user.email,
+      name: user.name,
+    };
+
+    const jwtToken = this.jwtService.sign(payload);
+
+    return {
+      access_token: jwtToken,
+    };
+  }
+
   async validateUser(request: AuthRequest) {
     const { email, password } = request;
 
     const response = await this.findUser.execute({ email });
     const passwordUser = response.user?.password;
 
-    if (response.user) {
-      const isPasswordValid = await bcrypt.compare(password, passwordUser!);
+    if (response && passwordUser) {
+      const isPasswordValid = await bcrypt.compare(password, passwordUser);
 
-      if (isPasswordValid) {
-        return {
-          ...response.user,
-          password: undefined,
-        };
+      if (isPasswordValid && response.user !== null) {
+        return PrismaUserMapper.toController(response.user);
       }
     }
 

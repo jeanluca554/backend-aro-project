@@ -25,6 +25,9 @@ export class UserController {
   async getUserFromEmail(@Param('email') email: string) {
     const { user } = await this.findUser.execute({ email });
 
+    if (user !== null) {
+      return UserViewModel.toHTTP(user);
+    }
     return {
       user,
     };

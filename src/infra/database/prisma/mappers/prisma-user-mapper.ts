@@ -11,10 +11,20 @@ export class PrismaUserMapper {
     };
   }
 
+  static toController(user: User) {
+    return {
+      id: user.id,
+      email: user.email,
+      password: undefined,
+      name: user.name,
+    };
+  }
+
   static toDomain(raw: RawUser): User {
     return new User(
       {
         email: raw.email,
+        // password: 'raw.password',
         password: raw.password,
         name: raw.name,
       },

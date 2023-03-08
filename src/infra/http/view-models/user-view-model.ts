@@ -5,7 +5,7 @@ export class UserViewModel {
     return {
       id: user.id,
       email: user.email,
-      password: 'Password',
+      password: undefined,
       name: user.name,
     };
   }
