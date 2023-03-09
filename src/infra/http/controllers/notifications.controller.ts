@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
-import { CancelNotification } from '@app/use-cases/cancel-notification';
-import { CountRecipientNotifications } from '@app/use-cases/count-recipient-notifications';
-import { GetRecipientNotifications } from '@app/use-cases/get-recipient-notifications';
-import { ReadNotification } from '@app/use-cases/read-notification';
-import { UnreadNotification } from '@app/use-cases/unread-notification';
-import { SendNotification } from '@app/use-cases/send-notification';
+import { CancelNotification } from '@app/use-cases/notification/cancel-notification';
+import { CountRecipientNotifications } from '@app/use-cases/notification/count-recipient-notifications';
+import { GetRecipientNotifications } from '@app/use-cases/notification/get-recipient-notifications';
+import { ReadNotification } from '@app/use-cases/notification/read-notification';
+import { UnreadNotification } from '@app/use-cases/notification/unread-notification';
+import { SendNotification } from '@app/use-cases/notification/send-notification';
 import { CreateNotificationBody } from '../dtos/create-notification-body';
 import { NotificationViewModel } from '../view-models/notification-view-model';
 
