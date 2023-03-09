@@ -5,6 +5,10 @@ import { HttpModule } from './infra/http/http.module';
 import { DatabaseUserModule } from './infra/database/database-user.module';
 import { UserModule } from './infra/http/user.module';
 import { AuthModule } from '@infra/http/auth.module';
+import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '@infra/guards/jwt-auth.guard';
+import { AppController } from '@infra/http/controllers/app.controller';
 
 @Module({
   imports: [
@@ -13,6 +17,14 @@ import { AuthModule } from '@infra/http/auth.module';
     DatabaseUserModule,
     UserModule,
     AuthModule,
+  ],
+  controllers: [AppController],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
   ],
 })
 export class AppModule {}

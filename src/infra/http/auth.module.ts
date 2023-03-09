@@ -1,13 +1,10 @@
-import { Module } from '@nestjs/common';
-import { DatabaseUserModule } from '../database/database-user.module';
-import { UserController } from './controllers/user.controller';
-import { CreateUser } from 'src/app/use-cases/user/create-user';
-import { FindUsers } from '@app/use-cases/user/find-user';
-import { AuthController } from './controllers/auth.controller';
 import { AuthService } from '@app/use-cases/auth/auth.service';
+import { JwtStrategy } from '@infra/guards/strategies/jwt.strategy';
 import { LocalStrategy } from '@infra/guards/strategies/local.strategy';
-import { UserModule } from './user.module';
+import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './controllers/auth.controller';
+import { UserModule } from './user.module';
 
 @Module({
   imports: [
@@ -18,6 +15,6 @@ import { JwtModule } from '@nestjs/jwt';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
 })
 export class AuthModule {}
