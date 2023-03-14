@@ -32,3 +32,12 @@ model User {
 
   @@map("user")
 }
+
+model Transaction {
+  id            String    @id
+  paymentMethod String
+  canceledAt    DateTime?
+  createdAt     DateTime  @default(now())
+
+  @@map("transaction")
+}
