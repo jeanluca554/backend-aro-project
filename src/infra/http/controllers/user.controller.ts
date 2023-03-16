@@ -12,7 +12,7 @@ export class UserController {
   async create(@Body() body: CreateUserBody) {
     const { email, name, password } = body;
 
-    const { user } = await this.createUser.execute({
+    const user = await this.createUser.execute({
       email,
       password,
       name,

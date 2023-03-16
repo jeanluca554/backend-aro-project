@@ -7,6 +7,7 @@ import { UnreadNotification } from '@app/use-cases/notification/unread-notificat
 import { SendNotification } from '@app/use-cases/notification/send-notification';
 import { CreateNotificationBody } from '../dtos/create-notification-body';
 import { NotificationViewModel } from '../view-models/notification-view-model';
+import { IsPublic } from '@infra/decorators/is-public.decorator';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -58,6 +59,7 @@ export class NotificationsController {
     await this.unreadNotification.execute({ notificationId: id });
   }
 
+  @IsPublic()
   @Post()
   async create(@Body() body: CreateNotificationBody) {
     // console.log(body)
