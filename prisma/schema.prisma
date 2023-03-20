@@ -27,17 +27,40 @@ model User {
   id       String @id
   email    String @unique
   password String
-
-  name String
+  name     String
 
   @@map("user")
 }
 
 model Transaction {
   id            String    @id
+  recipientId   String
+  customerId    String
   paymentMethod String
+  message       String
+  status        Int
+  cardToken     String
+  installments  Int?
+  productSold   String
   canceledAt    DateTime?
   createdAt     DateTime  @default(now())
 
   @@map("transaction")
+}
+
+model Customer {
+  id                  String @id
+  email               String @unique
+  identity            String @unique
+  name                String
+  phone               String
+  adressCity          String
+  adressComplement    String
+  adressDistrict      String
+  adressNumber        String
+  adressStateInitials String
+  adressStreet        String
+  adressZipCode       String
+
+  @@map("customer")
 }

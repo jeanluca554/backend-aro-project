@@ -11,14 +11,33 @@ export class PrismaTransactionMapper {
     };
   }
 
-  static toDomain(raw: RawTransaction): Transaction {
-    return new Transaction(
-      {
-        paymentMethod: raw.paymentMethod,
-        canceledAt: raw.canceledAt,
-        createdAt: raw.createdAt,
-      },
-      raw.id,
-    );
-  }
+  // static toDomain(raw: RawTransaction): Transaction {
+  //   return new Transaction(
+  //     {
+  //       paymentMethod: raw.paymentMethod,
+  //     //   creditCardHolder: raw.,
+  //     // creditCardCardNumber: raw.,
+  //     // creditCardExpirationDate: raw.,
+  //     // creditCardSecurityCode: raw.,
+  //     creditCardInstallmentQuantity: raw.,
+  //     addressCity: raw.,
+  //     addressComplement: raw.,
+  //     addressDistrict: raw.,
+  //     addressNumber: raw.,
+  //     addressStateInitials: raw.,
+  //     addressStreet: raw.,
+  //     addressZipCode: raw.,
+  //     courseCode: raw.,
+  //     courseDescription: raw.,
+  //     courseUnitPrice: raw.,
+  //     customerEmail: raw.,
+  //     customerIdentity: raw.,
+  //     customerName: raw.,
+  //     customerPhone: raw.,
+  //       canceledAt: raw.canceledAt,
+  //       createdAt: raw.createdAt,
+  //     },
+  //     raw.id,
+  //   );
+  // }
 }
