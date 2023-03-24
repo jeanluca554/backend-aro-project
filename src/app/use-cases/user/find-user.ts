@@ -14,7 +14,7 @@ interface FindUsersResponse {
 export class FindUsers {
   constructor(private usersRepository: UsersRepository) {}
 
-  async execute(request: FindUsersRequest) {
+  async execute(request: FindUsersRequest): Promise<FindUsersResponse> {
     const { email } = request;
     const user = await this.usersRepository.findByEmail(email);
 

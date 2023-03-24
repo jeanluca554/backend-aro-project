@@ -1,8 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { User } from '@app/entities/user/user';
 import { UsersRepository } from '@app/repositories/user-repository';
 import { PrismaService } from '../prisma.service';
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -25,19 +30,17 @@ export class PrismaUsersRepository implements UsersRepository {
   async create(user: User): Promise<void> {
     const raw = PrismaUserMapper.toPrisma(user);
 
-    await this.prismaService.user.create({
-      data: raw,
-    });
+    try {
+      await this.prismaService.user.create({
+        data: raw,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2002') {
+          throw new ConflictException('This email already exists');
+        }
+        throw new InternalServerErrorException();
+      }
+    }
   }
-
-  // async save(notification: Notification): Promise<void> {
-  //   const raw = PrismaNotificationMapper.toPrisma(notification);
-
-  //   await this.prismaService.notification.update({
-  //     where: {
-  //       id: raw.id,
-  //     },
-  //     data: raw,
-  //   });
-  // }
 }
