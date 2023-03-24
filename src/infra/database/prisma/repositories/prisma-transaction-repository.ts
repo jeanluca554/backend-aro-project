@@ -9,10 +9,44 @@ export class PrismaTransactionRepository implements TransactionRepository {
   constructor(private prismaService: PrismaService) {}
 
   async create(transaction: Transaction): Promise<void> {
-    const raw = PrismaTransactionMapper.toPrisma(transaction);
+    const {
+      canceledAt,
+      cardToken,
+      createdAt,
+      customerId,
+      discount,
+      id,
+      installments,
+      message,
+      paymentMethod,
+      status,
+      product,
+    } = PrismaTransactionMapper.toPrisma(transaction);
 
     await this.prismaService.transaction.create({
-      data: raw,
+      data: {
+        id,
+        installments,
+        paymentMethod,
+        canceledAt,
+        cardToken,
+        createdAt,
+        customerId,
+        discount,
+        message,
+        status,
+        products: {
+          create: [
+            {
+              product: {
+                connect: {
+                  id: product,
+                },
+              },
+            },
+          ],
+        },
+      },
     });
   }
 }

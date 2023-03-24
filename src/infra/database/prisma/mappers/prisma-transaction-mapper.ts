@@ -14,6 +14,7 @@ export class PrismaTransactionMapper {
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,
       createdAt: transaction.createdAt,
+      product: transaction.product.id,
     };
   }
 
