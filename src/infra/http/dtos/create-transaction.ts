@@ -4,10 +4,10 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsString,
-  Min,
-  Max,
   IsPositive,
+  IsString,
+  Max,
+  Min,
 } from 'class-validator';
 
 export class CreateTransactionBody {
