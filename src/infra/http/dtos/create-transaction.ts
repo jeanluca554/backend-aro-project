@@ -1,10 +1,16 @@
-import { IsEmail, IsInt, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  Max,
+  IsPositive,
+} from 'class-validator';
 
 export class CreateTransactionBody {
-  @IsNotEmpty()
-  @IsString()
-  paymentMethod: string;
-
   @IsString()
   creditCardHolder: string;
 
@@ -17,36 +23,50 @@ export class CreateTransactionBody {
   @IsString()
   creditCardSecurityCode: string;
 
+  @IsNotEmpty()
   @IsInt()
+  @Min(1)
+  @Max(3)
   creditCardInstallmentQuantity: number;
 
+  @IsNotEmpty()
   @IsString()
   courseCode: string;
 
+  @IsNotEmpty()
   @IsString()
   courseDescription: string;
 
+  @IsNotEmpty()
+  @IsPositive()
   @IsInt()
   courseUnitPrice: number;
 
+  @IsNotEmpty()
   @IsString()
   addressZipCode: string;
 
+  @IsNotEmpty()
   @IsString()
   addressStreet: string;
 
+  @IsNotEmpty()
   @IsString()
   addressComplement: string;
 
+  @IsNotEmpty()
   @IsString()
   addressNumber: string;
 
+  @IsNotEmpty()
   @IsString()
   addressDistrict: string;
 
+  @IsNotEmpty()
   @IsString()
   addressStateInitials: string;
 
+  @IsNotEmpty()
   @IsString()
   addressCity: string;
 
@@ -65,4 +85,13 @@ export class CreateTransactionBody {
   @IsNotEmpty()
   @IsEmail()
   customerEmail: string;
+
+  @IsNotEmpty()
+  @IsString()
+  paymentMethod: string;
+
+  @IsNumber()
+  @IsPositive()
+  @IsOptional()
+  discount: number;
 }

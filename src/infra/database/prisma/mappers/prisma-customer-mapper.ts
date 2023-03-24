@@ -1,19 +1,21 @@
 // import { Notification as RawNotification } from '@prisma/client';
-import { Transaction } from '@app/entities/transaction/transaction';
+import { Customer } from '@app/entities/transaction/customer';
 
-export class PrismaTransactionMapper {
-  static toPrisma(transaction: Transaction) {
+export class PrismaCustomerMapper {
+  static toPrisma(customer: Customer) {
     return {
-      id: transaction.id,
-      customerId: transaction.customer.id,
-      paymentMethod: transaction.paymentMethod,
-      status: transaction.status,
-      message: transaction.message,
-      cardToken: transaction.cardToken,
-      installments: transaction.installments,
-      discount: transaction.discount,
-      canceledAt: transaction.canceledAt,
-      createdAt: transaction.createdAt,
+      // id: customer.id,
+      email: customer.email,
+      identity: customer.id,
+      name: customer.name,
+      phone: customer.phone,
+      addressCity: customer.address.city,
+      addressComplement: customer.address.complement,
+      addressDistrict: customer.address.district,
+      addressNumber: customer.address.number,
+      addressStateInitials: customer.address.number,
+      addressStreet: customer.address.street,
+      addressZipCode: customer.address.zipCode,
     };
   }
 

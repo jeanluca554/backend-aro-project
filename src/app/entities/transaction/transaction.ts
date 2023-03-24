@@ -1,45 +1,33 @@
 import { Replace } from 'src/helpers/Replace';
-import { v4 as randomUUID } from 'uuid';
+import { BaseEntity } from '../base-entity';
+import { Customer } from './customer';
+import { Product } from './product';
 
 export interface TransactionProps {
+  customer: Customer;
+  product: Product;
   paymentMethod: string;
-  addressCity: string;
-  addressComplement: string;
-  addressDistrict: string;
-  addressNumber: string;
-  addressStateInitials: string;
-  addressStreet: string;
-  addressZipCode: string;
-  courseCode: string;
-  courseDescription: string;
-  courseUnitPrice: number;
-  customerEmail: string;
-  customerIdentity: string;
-  customerName: string;
-  customerPhone: string;
+  installments: number;
+  message?: string;
+  status?: number;
+  discount?: number | null;
+  cardToken?: string;
   canceledAt?: Date | null;
   createdAt: Date;
 }
 
-export class Transaction {
-  private _id: string;
+export class Transaction extends BaseEntity {
   private props: TransactionProps;
 
   constructor(
     props: Replace<TransactionProps, { createdAt?: Date }>,
     id?: string,
   ) {
-    this._id = id ?? randomUUID();
+    super(id);
     this.props = {
       ...props,
       createdAt: props.createdAt ?? new Date(),
     };
-  }
-
-  //futuramente exportar o id para uma classe "BaseEntity". Então extendê-la em todas as classes, pois todas terão um ID e o método Getter
-
-  public get id(): string {
-    return this._id;
   }
 
   public cancel() {
@@ -62,115 +50,59 @@ export class Transaction {
     return this.props.paymentMethod;
   }
 
-  public set addressCity(addressCity: string) {
-    this.props.addressCity = addressCity;
+  public set message(message: string | undefined) {
+    this.props.message = message;
   }
 
-  public get addressCity(): string {
-    return this.props.addressCity;
+  public get message(): string | undefined {
+    return this.props.message;
   }
 
-  public set addressComplement(addressComplement: string) {
-    this.props.addressComplement = addressComplement;
+  public set cardToken(cardToken: string | undefined) {
+    this.props.cardToken = cardToken;
   }
 
-  public get addressComplement(): string {
-    return this.props.addressComplement;
+  public get cardToken(): string | undefined {
+    return this.props.cardToken;
   }
 
-  public set addressDistrict(addressDistrict: string) {
-    this.props.addressDistrict = addressDistrict;
+  public set installments(installments: number) {
+    this.props.installments = installments;
   }
 
-  public get addressDistrict(): string {
-    return this.props.addressDistrict;
+  public get installments(): number {
+    return this.props.installments;
   }
 
-  public set addressNumber(addressNumber: string) {
-    this.props.addressNumber = addressNumber;
+  public set status(status: number | undefined) {
+    this.props.status = status;
   }
 
-  public get addressNumber(): string {
-    return this.props.addressNumber;
+  public get status(): number | undefined {
+    return this.props.status;
   }
 
-  public set addressStateInitials(addressStateInitials: string) {
-    this.props.addressStateInitials = addressStateInitials;
+  public set discount(discount: number | null | undefined) {
+    this.props.discount = discount;
   }
 
-  public get addressStateInitials(): string {
-    return this.props.addressStateInitials;
+  public get discount(): number | null | undefined {
+    return this.props.discount;
   }
 
-  public set addressStreet(addressStreet: string) {
-    this.props.addressStreet = addressStreet;
+  public set customer(customer: Customer) {
+    this.props.customer = customer;
   }
 
-  public get addressStreet(): string {
-    return this.props.addressStreet;
+  public get customer(): Customer {
+    return this.props.customer;
   }
 
-  public set addressZipCode(addressZipCode: string) {
-    this.props.addressZipCode = addressZipCode;
+  public set product(product: Product) {
+    this.props.product = product;
   }
 
-  public get addressZipCode(): string {
-    return this.props.addressZipCode;
-  }
-
-  public set courseCode(courseCode: string) {
-    this.props.courseCode = courseCode;
-  }
-
-  public get courseCode(): string {
-    return this.props.courseCode;
-  }
-
-  public set courseDescription(courseDescription: string) {
-    this.props.courseDescription = courseDescription;
-  }
-
-  public get courseDescription(): string {
-    return this.props.courseDescription;
-  }
-
-  public set courseUnitPrice(courseUnitPrice: number) {
-    this.props.courseUnitPrice = courseUnitPrice;
-  }
-
-  public get courseUnitPrice(): number {
-    return this.props.courseUnitPrice;
-  }
-
-  public set customerEmail(customerEmail: string) {
-    this.props.customerEmail = customerEmail;
-  }
-
-  public get customerEmail(): string {
-    return this.props.customerEmail;
-  }
-
-  public set customerIdentity(customerIdentity: string) {
-    this.props.customerIdentity = customerIdentity;
-  }
-
-  public get customerIdentity(): string {
-    return this.props.customerIdentity;
-  }
-
-  public set customerName(customerName: string) {
-    this.props.customerName = customerName;
-  }
-
-  public get customerName(): string {
-    return this.props.customerName;
-  }
-
-  public set customerPhone(customerPhone: string) {
-    this.props.customerPhone = customerPhone;
-  }
-
-  public get customerPhone(): string {
-    return this.props.customerPhone;
+  public get product(): Product {
+    return this.props.product;
   }
 }

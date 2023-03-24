@@ -33,34 +33,54 @@ model User {
 }
 
 model Transaction {
-  id            String    @id
-  recipientId   String
+  id            String                   @id
   customerId    String
   paymentMethod String
-  message       String
-  status        Int
-  cardToken     String
-  installments  Int?
-  productSold   String
+  message       String?
+  status        Int?
+  cardToken     String?
+  installments  Int
+  discount      Decimal?
   canceledAt    DateTime?
-  createdAt     DateTime  @default(now())
+  createdAt     DateTime                 @default(now())
+  customer      Customer                 @relation(fields: [customerId], references: [identity])
+  products      ProductsOnTransactions[]
 
   @@map("transaction")
 }
 
+model Product {
+  id           String                   @id
+  description  String
+  price        Decimal
+  transactions ProductsOnTransactions[]
+
+  @@map("product")
+}
+
+model ProductsOnTransactions {
+  Transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId String
+  Product       Product     @relation(fields: [productId], references: [id])
+  productId     String
+
+  @@id([transactionId, productId])
+  @@map("products_on_transactions")
+}
+
 model Customer {
-  id                  String @id
-  email               String @unique
-  identity            String @unique
-  name                String
-  phone               String
-  adressCity          String
-  adressComplement    String
-  adressDistrict      String
-  adressNumber        String
-  adressStateInitials String
-  adressStreet        String
-  adressZipCode       String
+  email                String        @unique
+  identity             String        @id @unique
+  name                 String
+  phone                String
+  addressCity          String
+  addressComplement    String
+  addressDistrict      String
+  addressNumber        String
+  addressStateInitials String
+  addressStreet        String
+  addressZipCode       String
+  transactions         Transaction[]
 
   @@map("customer")
 }
