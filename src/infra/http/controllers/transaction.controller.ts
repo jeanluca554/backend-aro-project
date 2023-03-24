@@ -81,7 +81,6 @@ export class TransactionController {
       name: customerName,
       phone: customerPhone,
     });
-
     console.log(customer);
 
     const { transaction } = await this.createTransaction.execute({
