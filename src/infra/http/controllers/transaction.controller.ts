@@ -1,4 +1,5 @@
 import { CreateTransaction } from '@app/use-cases/transaction/create-transaction';
+import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
 import { IsPublic } from '@infra/decorators/is-public.decorator';
 import { Body, Controller, Post } from '@nestjs/common';
@@ -12,6 +13,7 @@ export class TransactionController {
     private safe2PayTransaction: Safe2PayTransactionService,
     private createCustomer: CreateCustomerTransaction,
     private createTransaction: CreateTransaction,
+    private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
   ) {}
 
   @IsPublic()
@@ -68,26 +70,52 @@ export class TransactionController {
     console.log(transactionSafe2pay);
     // return transaction;
 
+    await this.createCustomer.execute({
+      addressCity,
+      addressComplement,
+      addressDistrict,
+      addressNumber,
+      addressStateInitials,
+      addressStreet,
+      addressZipCode,
+      email: customerEmail,
+      identity: customerIdentity,
+      name: customerName,
+      phone: customerPhone,
+    });
+
     if (transactionSafe2pay.HasError) {
+      const { transaction } =
+        await this.createUnsuccessfullyTransaction.execute({
+          addressCity,
+          addressComplement,
+          addressDistrict,
+          addressNumber,
+          addressStateInitials,
+          addressStreet,
+          addressZipCode,
+          customerEmail,
+          customerIdentity,
+          customerName,
+          customerPhone,
+          installments: creditCardInstallmentQuantity,
+          message: transactionSafe2pay.ResponseDetail?.Message,
+          paymentMethod,
+          productCode: courseCode,
+          productDescription: courseDescription,
+          productPrice: courseUnitPrice,
+          status: transactionSafe2pay.ResponseDetail?.Status,
+          cardToken: transactionSafe2pay.ResponseDetail?.Token,
+          discount,
+          hasError: transactionSafe2pay.HasError,
+          errorCode: transactionSafe2pay.ErrorCode,
+          errorMessage: transactionSafe2pay.Error,
+        });
+      console.log(transaction);
       return {
-        transactionResult:
-          TransactionViewModel.toHTTPError(transactionSafe2pay),
+        transactionResult: TransactionViewModel.toHTTPError(transaction),
       };
     } else {
-      await this.createCustomer.execute({
-        addressCity,
-        addressComplement,
-        addressDistrict,
-        addressNumber,
-        addressStateInitials,
-        addressStreet,
-        addressZipCode,
-        email: customerEmail,
-        identity: customerIdentity,
-        name: customerName,
-        phone: customerPhone,
-      });
-
       const { transaction } = await this.createTransaction.execute({
         addressCity,
         addressComplement,
@@ -109,6 +137,7 @@ export class TransactionController {
         status: transactionSafe2pay.ResponseDetail?.Status,
         cardToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
+        hasError: transactionSafe2pay.HasError,
       });
 
       console.log(transaction);

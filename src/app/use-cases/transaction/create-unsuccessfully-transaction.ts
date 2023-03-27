@@ -27,13 +27,15 @@ interface CreateTransactionRequest {
   discount?: number;
   cardToken?: string;
   hasError: boolean;
+  errorCode: string;
+  errorMessage: string;
 }
 interface CreateTransactionResponse {
   transaction: Transaction;
 }
 
 @Injectable()
-export class CreateTransaction {
+export class CreateUnsuccessfullyTransaction {
   constructor(private transactionRepository: TransactionRepository) {}
 
   async execute(
@@ -61,6 +63,8 @@ export class CreateTransaction {
       discount,
       cardToken,
       hasError,
+      errorCode,
+      errorMessage,
     } = request;
 
     const identity = customerIdentity;
@@ -97,9 +101,17 @@ export class CreateTransaction {
       paymentMethod,
       status,
       hasError,
+      errorCode,
+      errorMessage,
     });
 
-    await this.transactionRepository.create(transaction);
+    const transactionPrisma =
+      await this.transactionRepository.createUnsuccessfullyTransaction(
+        transaction,
+      );
+
+    console.log('transactionPrisma');
+    console.log(transaction);
 
     return {
       transaction,
