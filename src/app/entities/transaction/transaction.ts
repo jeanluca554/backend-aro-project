@@ -15,6 +15,9 @@ export interface TransactionProps {
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
+  description?: string;
+  tid?: string;
+  authorizationCode?: string;
   canceledAt?: Date | null;
   createdAt: Date;
 }
@@ -107,6 +110,30 @@ export class Transaction extends BaseEntity {
 
   public get errorMessage(): string | undefined {
     return this.props.errorMessage;
+  }
+
+  public set description(description: string | undefined) {
+    this.props.description = description;
+  }
+
+  public get description(): string | undefined {
+    return this.props.description;
+  }
+
+  public set tid(tid: string | undefined) {
+    this.props.tid = tid;
+  }
+
+  public get tid(): string | undefined {
+    return this.props.tid;
+  }
+
+  public set authorizationCode(authorizationCode: string | undefined) {
+    this.props.authorizationCode = authorizationCode;
+  }
+
+  public get authorizationCode(): string | undefined {
+    return this.props.authorizationCode;
   }
 
   public set hasError(hasError: boolean) {

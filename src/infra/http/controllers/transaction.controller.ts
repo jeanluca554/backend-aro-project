@@ -138,6 +138,10 @@ export class TransactionController {
         cardToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
         hasError: transactionSafe2pay.HasError,
+        authorizationCode:
+          transactionSafe2pay.ResponseDetail?.AuthorizationCode,
+        description: transactionSafe2pay.ResponseDetail?.Description,
+        tid: transactionSafe2pay.ResponseDetail?.Tid,
       });
 
       console.log(transaction);

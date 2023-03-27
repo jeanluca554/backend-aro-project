@@ -11,6 +11,7 @@ export class TransactionViewModel {
       status: transaction.status,
       discount: transaction.discount,
       cardToken: transaction.cardToken,
+      description: transaction.description,
     };
   }
 

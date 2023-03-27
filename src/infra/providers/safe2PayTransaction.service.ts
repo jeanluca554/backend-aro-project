@@ -35,6 +35,8 @@ export interface TransactionResponse {
     Message?: string;
     Status?: number;
     Token?: string;
+    Tid?: string;
+    AuthorizationCode?: string;
   };
   HasError: boolean;
   ErrorCode: string;

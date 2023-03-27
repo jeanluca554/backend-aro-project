@@ -22,6 +22,9 @@ export class PrismaTransactionRepository implements TransactionRepository {
       paymentMethod,
       status,
       product,
+      description,
+      authorizationCode,
+      tid,
     } = PrismaTransactionMapper.toPrisma(transaction);
 
     await this.prismaService.transaction.create({
@@ -36,6 +39,9 @@ export class PrismaTransactionRepository implements TransactionRepository {
         discount,
         message,
         status,
+        description,
+        authorizationCode,
+        tid,
         products: {
           create: [
             {

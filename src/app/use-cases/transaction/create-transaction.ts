@@ -27,6 +27,9 @@ interface CreateTransactionRequest {
   discount?: number;
   cardToken?: string;
   hasError: boolean;
+  description?: string;
+  tid?: string;
+  authorizationCode?: string;
 }
 interface CreateTransactionResponse {
   transaction: Transaction;
@@ -61,6 +64,9 @@ export class CreateTransaction {
       discount,
       cardToken,
       hasError,
+      authorizationCode,
+      description,
+      tid,
     } = request;
 
     const identity = customerIdentity;
@@ -97,6 +103,9 @@ export class CreateTransaction {
       paymentMethod,
       status,
       hasError,
+      authorizationCode,
+      description,
+      tid,
     });
 
     await this.transactionRepository.create(transaction);
