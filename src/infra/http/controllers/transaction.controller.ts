@@ -68,54 +68,54 @@ export class TransactionController {
     console.log(transactionSafe2pay);
     // return transaction;
 
-    const customer = await this.createCustomer.execute({
-      addressCity,
-      addressComplement,
-      addressDistrict,
-      addressNumber,
-      addressStateInitials,
-      addressStreet,
-      addressZipCode,
-      email: customerEmail,
-      identity: customerIdentity,
-      name: customerName,
-      phone: customerPhone,
-    });
-    console.log(customer);
+    if (transactionSafe2pay.HasError) {
+      return {
+        transactionResult:
+          TransactionViewModel.toHTTPError(transactionSafe2pay),
+      };
+    } else {
+      await this.createCustomer.execute({
+        addressCity,
+        addressComplement,
+        addressDistrict,
+        addressNumber,
+        addressStateInitials,
+        addressStreet,
+        addressZipCode,
+        email: customerEmail,
+        identity: customerIdentity,
+        name: customerName,
+        phone: customerPhone,
+      });
 
-    const { transaction } = await this.createTransaction.execute({
-      addressCity,
-      addressComplement,
-      addressDistrict,
-      addressNumber,
-      addressStateInitials,
-      addressStreet,
-      addressZipCode,
-      customerEmail,
-      customerIdentity,
-      customerName,
-      customerPhone,
-      installments: creditCardInstallmentQuantity,
-      message: transactionSafe2pay.ResponseDetail?.Message,
-      paymentMethod,
-      productCode: courseCode,
-      productDescription: courseDescription,
-      productPrice: courseUnitPrice,
-      status: transactionSafe2pay.ResponseDetail?.Status,
-      cardToken: transactionSafe2pay.ResponseDetail?.Token,
-      discount,
-    });
+      const { transaction } = await this.createTransaction.execute({
+        addressCity,
+        addressComplement,
+        addressDistrict,
+        addressNumber,
+        addressStateInitials,
+        addressStreet,
+        addressZipCode,
+        customerEmail,
+        customerIdentity,
+        customerName,
+        customerPhone,
+        installments: creditCardInstallmentQuantity,
+        message: transactionSafe2pay.ResponseDetail?.Message,
+        paymentMethod,
+        productCode: courseCode,
+        productDescription: courseDescription,
+        productPrice: courseUnitPrice,
+        status: transactionSafe2pay.ResponseDetail?.Status,
+        cardToken: transactionSafe2pay.ResponseDetail?.Token,
+        discount,
+      });
 
-    console.log(transaction);
+      console.log(transaction);
 
-    return {
-      transactionDatabase: TransactionViewModel.toHTTP(transaction),
-    };
+      return {
+        transactionResult: TransactionViewModel.toHTTP(transaction),
+      };
+    }
   }
-
-  // @IsPublic()
-  // @Post('teste')
-  // processTeste(): Promise<void> {
-  //   return this.safe2PayTransaction.process();
-  // }
 }

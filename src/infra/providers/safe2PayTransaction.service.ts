@@ -27,7 +27,8 @@ interface TransactionRequest {
   customerPhone: string;
 }
 
-export interface TransactionResponse extends Error {
+// export interface TransactionResponse extends Error {
+export interface TransactionResponse {
   ResponseDetail?: {
     IdTransaction?: string;
     Description?: string;
@@ -35,6 +36,9 @@ export interface TransactionResponse extends Error {
     Status?: number;
     Token?: string;
   };
+  HasError: boolean;
+  ErrorCode: string;
+  Error: string;
 }
 
 @Injectable()
@@ -136,16 +140,20 @@ export class Safe2PayTransactionService {
 
     payload.Customer = customer;
 
-    let paymentResponse: TransactionResponse = { name: '', message: '' };
+    let paymentResponse: TransactionResponse = {
+      // name: '',
+      // message: '',
+      HasError: false,
+      Error: '',
+      ErrorCode: '',
+    };
 
     await PaymentRequest.Payment(payload).then(
       (result: TransactionResponse) => {
         paymentResponse = result;
       },
       function (err: Error) {
-        //...
         console.log(err);
-        paymentResponse = err;
       },
     );
 
