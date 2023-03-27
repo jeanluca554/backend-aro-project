@@ -12,6 +12,9 @@ export interface TransactionProps {
   status?: number;
   discount?: number | null;
   cardToken?: string;
+  hasError: boolean;
+  errorCode?: string;
+  errorMessage?: string;
   canceledAt?: Date | null;
   createdAt: Date;
 }
@@ -88,6 +91,30 @@ export class Transaction extends BaseEntity {
 
   public get discount(): number | null | undefined {
     return this.props.discount;
+  }
+
+  public set errorCode(errorCode: string | undefined) {
+    this.props.errorCode = errorCode;
+  }
+
+  public get errorCode(): string | undefined {
+    return this.props.errorCode;
+  }
+
+  public set errorMessage(errorMessage: string | undefined) {
+    this.props.errorMessage = errorMessage;
+  }
+
+  public get errorMessage(): string | undefined {
+    return this.props.errorMessage;
+  }
+
+  public set hasError(hasError: boolean) {
+    this.props.hasError = hasError;
+  }
+
+  public get hasError(): boolean {
+    return this.props.hasError;
   }
 
   public set customer(customer: Customer) {

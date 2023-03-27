@@ -1,10 +1,5 @@
 import { Transaction } from '@app/entities/transaction/transaction';
 
-type TransactionErrorSafe2Pay = {
-  ErrorCode: string | undefined;
-  Error: string | undefined;
-};
-
 export class TransactionViewModel {
   static toHTTP(transaction: Transaction) {
     return {
@@ -19,10 +14,10 @@ export class TransactionViewModel {
     };
   }
 
-  static toHTTPError(transaction: TransactionErrorSafe2Pay) {
+  static toHTTPError(transaction: Transaction) {
     return {
-      errorCode: transaction.ErrorCode,
-      errorMessage: transaction.Error,
+      errorCode: transaction.errorCode,
+      errorMessage: transaction.errorMessage,
     };
   }
 }
