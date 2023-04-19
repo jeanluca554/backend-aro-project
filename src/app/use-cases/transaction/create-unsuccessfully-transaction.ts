@@ -27,8 +27,8 @@ interface CreateTransactionRequest {
   discount?: number;
   cardToken?: string;
   hasError: boolean;
-  errorCode: string;
-  errorMessage: string;
+  errorCode?: string;
+  errorMessage?: string;
 }
 interface CreateTransactionResponse {
   transaction: Transaction;
