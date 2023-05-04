@@ -50,7 +50,6 @@ export class CreateTransactionBody {
   @IsString()
   addressStreet: string;
 
-  @IsNotEmpty()
   @IsString()
   addressComplement: string;
 
