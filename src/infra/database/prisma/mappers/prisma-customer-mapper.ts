@@ -13,7 +13,7 @@ export class PrismaCustomerMapper {
       addressComplement: customer.address.complement,
       addressDistrict: customer.address.district,
       addressNumber: customer.address.number,
-      addressStateInitials: customer.address.number,
+      addressStateInitials: customer.address.stateInitials,
       addressStreet: customer.address.street,
       addressZipCode: customer.address.zipCode,
     };

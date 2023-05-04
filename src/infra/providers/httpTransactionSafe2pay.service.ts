@@ -57,7 +57,7 @@ function formatData(data: TransactionRequest) {
         "ZipCode": data.addressZipCode,
         "Street": data.addressStreet,
         "Number": data.addressNumber,
-        "Complement": data.addressDistrict,
+        "Complement": data.addressComplement,
         "District": data.addressDistrict,
         "CityName": data.addressCity,
         "StateInitials": data.addressStateInitials,
