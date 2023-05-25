@@ -15,4 +15,12 @@ export class PrismaProductsRepository implements ProductsRepository {
       data: raw,
     });
   }
+
+  async findMany(): Promise<Product[]> {
+    const products = await this.prismaService.product.findMany();
+
+    return products.map((product) => {
+      return PrismaProductMapper.toDomain(product);
+    });
+  }
 }
