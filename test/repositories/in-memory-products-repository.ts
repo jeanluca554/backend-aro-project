@@ -7,4 +7,8 @@ export class InMemoryProductsRepository implements ProductsRepository {
   async create(product: Product) {
     this.products.push(product);
   }
+
+  async findMany(): Promise<Product[]> {
+    return this.products;
+  }
 }
