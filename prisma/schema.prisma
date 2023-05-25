@@ -68,7 +68,7 @@ model TransactionUnsuccessfully {
 model Product {
   id           String                   @id
   description  String
-  price        Decimal
+  price        Int
   transactions ProductsOnTransactions[]
 
   @@map("product")

@@ -18,7 +18,7 @@ interface CreateTransactionRequest {
   customerName: string;
   customerPhone: string;
   productCode: string;
-  productDescription: string | undefined;
+  productDescription: string;
   productPrice: number;
   paymentMethod: string;
   installments: number;
@@ -38,9 +38,7 @@ interface CreateTransactionResponse {
 export class CreateUnsuccessfullyTransaction {
   constructor(private transactionRepository: TransactionRepository) {}
 
-  async execute(
-    request: CreateTransactionRequest,
-  ): Promise<CreateTransactionResponse> {
+  async execute(request: CreateTransactionRequest): Promise<CreateTransactionResponse> {
     const {
       addressCity,
       addressComplement,
@@ -105,10 +103,10 @@ export class CreateUnsuccessfullyTransaction {
       errorMessage,
     });
 
-    const transactionPrisma =
-      await this.transactionRepository.createUnsuccessfullyTransaction(
-        transaction,
-      );
+    await this.transactionRepository.createUnsuccessfullyTransaction(transaction);
+    //const transactionPrisma = await this.transactionRepository.createUnsuccessfullyTransaction(
+    //  transaction,
+    //);
 
     console.log('transactionPrisma');
     console.log(transaction);

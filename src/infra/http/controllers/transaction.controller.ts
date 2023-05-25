@@ -87,32 +87,31 @@ export class TransactionController {
     });
 
     if (transactionSafe2pay.HasError) {
-      const { transaction } =
-        await this.createUnsuccessfullyTransaction.execute({
-          addressCity,
-          addressComplement,
-          addressDistrict,
-          addressNumber,
-          addressStateInitials,
-          addressStreet,
-          addressZipCode,
-          customerEmail,
-          customerIdentity,
-          customerName,
-          customerPhone,
-          installments: creditCardInstallmentQuantity,
-          message: transactionSafe2pay.ResponseDetail?.Message,
-          paymentMethod,
-          productCode: courseCode,
-          productDescription: courseDescription,
-          productPrice: courseUnitPrice,
-          status: transactionSafe2pay.ResponseDetail?.Status,
-          cardToken: transactionSafe2pay.ResponseDetail?.Token,
-          discount,
-          hasError: transactionSafe2pay.HasError,
-          errorCode: transactionSafe2pay.ErrorCode,
-          errorMessage: transactionSafe2pay.Error,
-        });
+      const { transaction } = await this.createUnsuccessfullyTransaction.execute({
+        addressCity,
+        addressComplement,
+        addressDistrict,
+        addressNumber,
+        addressStateInitials,
+        addressStreet,
+        addressZipCode,
+        customerEmail,
+        customerIdentity,
+        customerName,
+        customerPhone,
+        installments: creditCardInstallmentQuantity,
+        message: transactionSafe2pay.ResponseDetail?.Message,
+        paymentMethod,
+        productCode: courseCode,
+        productDescription: courseDescription,
+        productPrice: courseUnitPrice,
+        status: transactionSafe2pay.ResponseDetail?.Status,
+        cardToken: transactionSafe2pay.ResponseDetail?.Token,
+        discount,
+        hasError: transactionSafe2pay.HasError,
+        errorCode: transactionSafe2pay.ErrorCode,
+        errorMessage: transactionSafe2pay.Error,
+      });
       console.log(transaction);
       return {
         transactionResult: TransactionViewModel.toHTTPError(transaction),
@@ -140,8 +139,7 @@ export class TransactionController {
         cardToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
         hasError: transactionSafe2pay.HasError,
-        authorizationCode:
-          transactionSafe2pay.ResponseDetail?.AuthorizationCode,
+        authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
         description: transactionSafe2pay.ResponseDetail?.Description,
         tid: transactionSafe2pay.ResponseDetail?.Tid,
       });
@@ -182,30 +180,28 @@ export class TransactionController {
       discount,
     } = body;
 
-    const transactionSafe2pay = await this.httpTransactionSafe2Pay.processAxios(
-      {
-        paymentMethod,
-        creditCardHolder,
-        creditCardCardNumber,
-        creditCardExpirationDate,
-        creditCardSecurityCode,
-        creditCardInstallmentQuantity,
-        addressCity,
-        addressComplement,
-        addressDistrict,
-        addressNumber,
-        addressStateInitials,
-        addressStreet,
-        addressZipCode,
-        courseCode,
-        courseDescription,
-        courseUnitPrice,
-        customerEmail,
-        customerIdentity,
-        customerName,
-        customerPhone,
-      },
-    );
+    const transactionSafe2pay = await this.httpTransactionSafe2Pay.processAxios({
+      paymentMethod,
+      creditCardHolder,
+      creditCardCardNumber,
+      creditCardExpirationDate,
+      creditCardSecurityCode,
+      creditCardInstallmentQuantity,
+      addressCity,
+      addressComplement,
+      addressDistrict,
+      addressNumber,
+      addressStateInitials,
+      addressStreet,
+      addressZipCode,
+      courseCode,
+      courseDescription,
+      courseUnitPrice,
+      customerEmail,
+      customerIdentity,
+      customerName,
+      customerPhone,
+    });
 
     // console.log(transactionSafe2pay);
     // return transaction;
@@ -225,32 +221,31 @@ export class TransactionController {
     });
 
     if (transactionSafe2pay.HasError) {
-      const { transaction } =
-        await this.createUnsuccessfullyTransaction.execute({
-          addressCity,
-          addressComplement,
-          addressDistrict,
-          addressNumber,
-          addressStateInitials,
-          addressStreet,
-          addressZipCode,
-          customerEmail,
-          customerIdentity,
-          customerName,
-          customerPhone,
-          installments: creditCardInstallmentQuantity,
-          message: transactionSafe2pay.ResponseDetail?.Message,
-          paymentMethod,
-          productCode: courseCode,
-          productDescription: courseDescription,
-          productPrice: courseUnitPrice,
-          status: transactionSafe2pay.ResponseDetail?.Status,
-          cardToken: transactionSafe2pay.ResponseDetail?.Token,
-          discount,
-          hasError: transactionSafe2pay.HasError,
-          errorCode: transactionSafe2pay.ErrorCode,
-          errorMessage: transactionSafe2pay.Error,
-        });
+      const { transaction } = await this.createUnsuccessfullyTransaction.execute({
+        addressCity,
+        addressComplement,
+        addressDistrict,
+        addressNumber,
+        addressStateInitials,
+        addressStreet,
+        addressZipCode,
+        customerEmail,
+        customerIdentity,
+        customerName,
+        customerPhone,
+        installments: creditCardInstallmentQuantity,
+        message: transactionSafe2pay.ResponseDetail?.Message,
+        paymentMethod,
+        productCode: courseCode,
+        productDescription: courseDescription,
+        productPrice: courseUnitPrice,
+        status: transactionSafe2pay.ResponseDetail?.Status,
+        cardToken: transactionSafe2pay.ResponseDetail?.Token,
+        discount,
+        hasError: transactionSafe2pay.HasError,
+        errorCode: transactionSafe2pay.ErrorCode,
+        errorMessage: transactionSafe2pay.Error,
+      });
       console.log(transaction);
       return {
         transactionResult: TransactionViewModel.toHTTPError(transaction),
@@ -278,8 +273,7 @@ export class TransactionController {
         cardToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
         hasError: transactionSafe2pay.HasError,
-        authorizationCode:
-          transactionSafe2pay.ResponseDetail?.AuthorizationCode,
+        authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
         description: transactionSafe2pay.ResponseDetail?.Description,
         tid: transactionSafe2pay.ResponseDetail?.Tid,
       });

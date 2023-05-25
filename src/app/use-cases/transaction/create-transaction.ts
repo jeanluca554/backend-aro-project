@@ -18,7 +18,7 @@ interface CreateTransactionRequest {
   customerName: string;
   customerPhone: string;
   productCode: string;
-  productDescription: string | undefined;
+  productDescription: string;
   productPrice: number;
   paymentMethod: string;
   installments: number;
@@ -39,9 +39,7 @@ interface CreateTransactionResponse {
 export class CreateTransaction {
   constructor(private transactionRepository: TransactionRepository) {}
 
-  async execute(
-    request: CreateTransactionRequest,
-  ): Promise<CreateTransactionResponse> {
+  async execute(request: CreateTransactionRequest): Promise<CreateTransactionResponse> {
     const {
       addressCity,
       addressComplement,

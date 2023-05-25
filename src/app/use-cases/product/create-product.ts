@@ -13,7 +13,7 @@ interface SendProductResponse {
 
 @Injectable()
 export class CreateProduct {
-  constructor(private ProductsRepository: ProductsRepository) {}
+  constructor(private productsRepository: ProductsRepository) {}
 
   async execute(request: SendProductRequest): Promise<SendProductResponse> {
     const { description, price } = request;
@@ -23,7 +23,7 @@ export class CreateProduct {
       price,
     });
 
-    await this.ProductsRepository.create(product);
+    await this.productsRepository.create(product);
 
     return {
       product,
