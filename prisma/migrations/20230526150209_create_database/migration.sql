@@ -58,7 +58,7 @@ CREATE TABLE `transaction_unsuccessfully` (
 CREATE TABLE `product` (
     `id` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
-    `price` DECIMAL(65, 30) NOT NULL,
+    `price` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
