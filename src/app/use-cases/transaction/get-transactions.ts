@@ -14,7 +14,8 @@ interface GetTransactionsResponse {
 export class GetTransactions {
   constructor(private transactionsRepository: TransactionRepository) {}
 
-  async execute(request: GetTransactionsRequest): Promise<GetTransactionsResponse> {
+  // async execute(request: GetTransactionsRequest): Promise<GetTransactionsResponse> {
+  async execute(request: GetTransactionsRequest) {
     const { productId } = request;
 
     const transactions = await this.transactionsRepository.findManyByProductId(productId);

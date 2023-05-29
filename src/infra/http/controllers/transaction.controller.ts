@@ -1,8 +1,9 @@
 import { CreateTransaction } from '@app/use-cases/transaction/create-transaction';
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
+import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
 import { IsPublic } from '@infra/decorators/is-public.decorator';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTransactionBody } from '../dtos/create-transaction';
 import { TransactionViewModel } from '../view-models/transaction-view-model';
 import { Safe2PayTransactionService } from '@infra/providers/safe2PayTransaction.service';
@@ -16,6 +17,7 @@ export class TransactionController {
     private createCustomer: CreateCustomerTransaction,
     private createTransaction: CreateTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
+    private getTransaction: GetTransactions,
   ) {}
 
   @IsPublic()
@@ -284,5 +286,16 @@ export class TransactionController {
         transactionResult: TransactionViewModel.toHTTP(transaction),
       };
     }
+  }
+
+  @Get(':productId')
+  async getTransactions(@Param('productId') productId: string) {
+    const { transactions } = await this.getTransaction.execute({
+      productId,
+    });
+
+    return {
+      transactions: transactions,
+    };
   }
 }

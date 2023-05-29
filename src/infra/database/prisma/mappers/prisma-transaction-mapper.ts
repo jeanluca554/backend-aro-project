@@ -1,5 +1,23 @@
 // import { Notification as RawNotification } from '@prisma/client';
 import { Transaction } from '@app/entities/transaction/transaction';
+import { ProductsOnTransactions } from '@prisma/client';
+
+type TransactionType = {
+  customer: string;
+  category: string;
+  identity: string;
+  amountPaid: number;
+  paymentMethod: string;
+  installments: number;
+  product: string;
+  paymentDate: string;
+};
+
+type ProductsOnTransactionsType = {
+  description: string | undefined;
+  paymentMethod: string;
+  installments: number;
+};
 
 export class PrismaTransactionMapper {
   static toPrisma(transaction: Transaction) {
@@ -21,33 +39,25 @@ export class PrismaTransactionMapper {
     };
   }
 
-  // static toDomain(raw: RawTransaction): Transaction {
-  //   return new Transaction(
+  // static toDomain(raw: RawNotification): Notification {
+  //   return new Notification(
   //     {
-  //       paymentMethod: raw.paymentMethod,
-  //     //   creditCardHolder: raw.,
-  //     // creditCardCardNumber: raw.,
-  //     // creditCardExpirationDate: raw.,
-  //     // creditCardSecurityCode: raw.,
-  //     creditCardInstallmentQuantity: raw.,
-  //     addressCity: raw.,
-  //     addressComplement: raw.,
-  //     addressDistrict: raw.,
-  //     addressNumber: raw.,
-  //     addressStateInitials: raw.,
-  //     addressStreet: raw.,
-  //     addressZipCode: raw.,
-  //     courseCode: raw.,
-  //     courseDescription: raw.,
-  //     courseUnitPrice: raw.,
-  //     customerEmail: raw.,
-  //     customerIdentity: raw.,
-  //     customerName: raw.,
-  //     customerPhone: raw.,
+  //       category: raw.category,
+  //       content: new Content(raw.content),
+  //       recipientId: raw.recipientId,
+  //       readAt: raw.readAt,
   //       canceledAt: raw.canceledAt,
   //       createdAt: raw.createdAt,
   //     },
   //     raw.id,
   //   );
   // }
+
+  static toDomain(raw: ProductsOnTransactionsType): ProductsOnTransactionsType {
+    return {
+      description: raw.description,
+      installments: raw.installments,
+      paymentMethod: raw.paymentMethod,
+    };
+  }
 }

@@ -1,5 +1,10 @@
 import { Transaction } from '@app/entities/transaction/transaction';
 
+type ProductsOnTransactionsType = {
+  transactionId: string;
+  productId: string;
+};
+
 export class TransactionViewModel {
   static toHTTP(transaction: Transaction) {
     return {
@@ -12,6 +17,16 @@ export class TransactionViewModel {
       discount: transaction.discount,
       cardToken: transaction.cardToken,
       description: transaction.description,
+    };
+  }
+
+  static toHTTPTransaction(transaction: ProductsOnTransactionsType) {
+    return {
+      // content: transaction.paymentMethod,
+      // customer: transaction.customer,
+      // product: transaction.product,
+      transactionId: transaction.transactionId,
+      productId: transaction.productId,
     };
   }
 
