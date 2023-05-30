@@ -25,7 +25,7 @@ interface CreateTransactionRequest {
   message: string | undefined;
   status: number | undefined;
   discount?: number;
-  cardToken?: string;
+  transactionToken?: string;
   hasError: boolean;
   description?: string;
   tid?: string;
@@ -60,7 +60,7 @@ export class CreateTransaction {
       message,
       status,
       discount,
-      cardToken,
+      transactionToken,
       hasError,
       authorizationCode,
       description,
@@ -95,7 +95,7 @@ export class CreateTransaction {
         productCode,
       ),
       discount,
-      cardToken,
+      transactionToken,
       installments,
       message,
       paymentMethod,

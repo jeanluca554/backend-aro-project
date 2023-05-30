@@ -15,7 +15,7 @@ export class TransactionViewModel {
       message: transaction.message,
       status: transaction.status,
       discount: transaction.discount,
-      cardToken: transaction.cardToken,
+      cardToken: transaction.transactionToken,
       description: transaction.description,
     };
   }

@@ -27,7 +27,7 @@ export class PrismaTransactionMapper {
       paymentMethod: transaction.paymentMethod,
       status: transaction.status,
       message: transaction.message,
-      cardToken: transaction.cardToken,
+      transactionToken: transaction.transactionToken,
       installments: transaction.installments,
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,

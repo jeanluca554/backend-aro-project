@@ -11,7 +11,7 @@ export interface TransactionProps {
   message?: string;
   status?: number;
   discount?: number | null;
-  cardToken?: string;
+  transactionToken?: string;
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
@@ -25,10 +25,7 @@ export interface TransactionProps {
 export class Transaction extends BaseEntity {
   private props: TransactionProps;
 
-  constructor(
-    props: Replace<TransactionProps, { createdAt?: Date }>,
-    id?: string,
-  ) {
+  constructor(props: Replace<TransactionProps, { createdAt?: Date }>, id?: string) {
     super(id);
     this.props = {
       ...props,
@@ -64,12 +61,12 @@ export class Transaction extends BaseEntity {
     return this.props.message;
   }
 
-  public set cardToken(cardToken: string | undefined) {
-    this.props.cardToken = cardToken;
+  public set transactionToken(transactionToken: string | undefined) {
+    this.props.transactionToken = transactionToken;
   }
 
-  public get cardToken(): string | undefined {
-    return this.props.cardToken;
+  public get transactionToken(): string | undefined {
+    return this.props.transactionToken;
   }
 
   public set installments(installments: number) {

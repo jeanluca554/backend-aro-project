@@ -12,7 +12,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
   async create(transaction: Transaction): Promise<void> {
     const {
       canceledAt,
-      cardToken,
+      transactionToken,
       createdAt,
       customerId,
       discount,
@@ -33,7 +33,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
         installments,
         paymentMethod,
         canceledAt,
-        cardToken,
+        transactionToken,
         createdAt,
         customerId,
         discount,
