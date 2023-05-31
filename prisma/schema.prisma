@@ -44,6 +44,8 @@ model Transaction {
   description       String?
   tid               String?
   authorizationCode String?
+  pixQrCode         String?
+  pixKey            String?
   canceledAt        DateTime?
   createdAt         DateTime                 @default(now())
   customer          Customer                 @relation(fields: [customerId], references: [identity])

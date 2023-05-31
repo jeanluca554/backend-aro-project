@@ -205,7 +205,7 @@ export class TransactionController {
       customerPhone,
     });
 
-    // console.log(transactionSafe2pay);
+    console.log(transactionSafe2pay);
     // return transaction;
 
     await this.createCustomer.execute({
@@ -278,6 +278,8 @@ export class TransactionController {
         authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
         description: transactionSafe2pay.ResponseDetail?.Description,
         tid: transactionSafe2pay.ResponseDetail?.Tid,
+        pixQrCode: transactionSafe2pay.ResponseDetail?.QrCode,
+        pixKey: transactionSafe2pay.ResponseDetail?.Key,
       });
 
       console.log(transaction);

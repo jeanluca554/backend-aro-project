@@ -30,7 +30,10 @@ interface CreateTransactionRequest {
   description?: string;
   tid?: string;
   authorizationCode?: string;
+  pixQrCode?: string;
+  pixKey?: string;
 }
+
 interface CreateTransactionResponse {
   transaction: Transaction;
 }
@@ -65,6 +68,8 @@ export class CreateTransaction {
       authorizationCode,
       description,
       tid,
+      pixQrCode,
+      pixKey,
     } = request;
 
     const identity = customerIdentity;
@@ -104,6 +109,8 @@ export class CreateTransaction {
       authorizationCode,
       description,
       tid,
+      pixKey,
+      pixQrCode,
     });
 
     await this.transactionRepository.create(transaction);

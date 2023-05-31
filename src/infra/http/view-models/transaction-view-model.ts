@@ -11,12 +11,13 @@ export class TransactionViewModel {
       // content: transaction.paymentMethod,
       // customer: transaction.customer,
       // product: transaction.product,
-      installments: transaction.installments,
+      //installments: transaction.installments,
       message: transaction.message,
       status: transaction.status,
-      discount: transaction.discount,
-      cardToken: transaction.transactionToken,
+      //discount: transaction.discount,
+      //transactionToken: transaction.transactionToken,
       description: transaction.description,
+      pixQrCode: transaction.pixQrCode,
     };
   }
 
