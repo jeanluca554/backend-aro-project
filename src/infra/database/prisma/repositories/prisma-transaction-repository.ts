@@ -86,6 +86,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
             createdAt: true,
             paymentMethod: true,
             installments: true,
+            id: true,
             customer: {
               select: {
                 name: true,

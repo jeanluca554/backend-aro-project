@@ -15,6 +15,7 @@ interface CreateCustomerRequest {
   identity: string;
   name: string;
   phone: string;
+  category: string;
 }
 
 interface CreateCustomerResponse {
@@ -25,9 +26,7 @@ interface CreateCustomerResponse {
 export class CreateCustomerTransaction {
   constructor(private customerRepository: CustomerRepository) {}
 
-  async execute(
-    request: CreateCustomerRequest,
-  ): Promise<CreateCustomerResponse> {
+  async execute(request: CreateCustomerRequest): Promise<CreateCustomerResponse> {
     const {
       addressCity,
       addressComplement,
@@ -40,6 +39,7 @@ export class CreateCustomerTransaction {
       identity,
       name,
       phone,
+      category,
     } = request;
 
     const customer = new Customer(
@@ -56,6 +56,7 @@ export class CreateCustomerTransaction {
         email,
         name,
         phone,
+        category,
       },
       identity,
     );

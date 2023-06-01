@@ -45,6 +45,7 @@ export class TransactionController {
       customerIdentity,
       customerName,
       customerPhone,
+      customerCategory,
       discount,
     } = body;
 
@@ -86,6 +87,7 @@ export class TransactionController {
       identity: customerIdentity,
       name: customerName,
       phone: customerPhone,
+      category: customerCategory,
     });
 
     if (transactionSafe2pay.HasError) {
@@ -101,6 +103,7 @@ export class TransactionController {
         customerIdentity,
         customerName,
         customerPhone,
+        customerCategory,
         installments: creditCardInstallmentQuantity,
         message: transactionSafe2pay.ResponseDetail?.Message,
         paymentMethod,
@@ -131,6 +134,7 @@ export class TransactionController {
         customerIdentity,
         customerName,
         customerPhone,
+        customerCategory,
         installments: creditCardInstallmentQuantity,
         message: transactionSafe2pay.ResponseDetail?.Message,
         paymentMethod,
@@ -179,6 +183,7 @@ export class TransactionController {
       customerIdentity,
       customerName,
       customerPhone,
+      customerCategory,
       discount,
     } = body;
 
@@ -220,6 +225,7 @@ export class TransactionController {
       identity: customerIdentity,
       name: customerName,
       phone: customerPhone,
+      category: customerCategory,
     });
 
     if (transactionSafe2pay.HasError) {
@@ -235,6 +241,7 @@ export class TransactionController {
         customerIdentity,
         customerName,
         customerPhone,
+        customerCategory,
         installments: creditCardInstallmentQuantity,
         message: transactionSafe2pay.ResponseDetail?.Message,
         paymentMethod,
@@ -265,6 +272,7 @@ export class TransactionController {
         customerIdentity,
         customerName,
         customerPhone,
+        customerCategory,
         installments: creditCardInstallmentQuantity,
         message: transactionSafe2pay.ResponseDetail?.Message,
         paymentMethod,

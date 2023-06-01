@@ -93,6 +93,7 @@ model Customer {
   identity                   String                      @id @unique
   name                       String
   phone                      String
+  category                   String
   addressCity                String
   addressComplement          String
   addressDistrict            String

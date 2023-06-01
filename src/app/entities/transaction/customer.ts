@@ -7,6 +7,7 @@ export interface CustomerProps {
   email: string;
   name: string;
   phone: string;
+  category: string;
   createdAt: Date;
 }
 
@@ -14,10 +15,7 @@ export class Customer {
   private _identity: string;
   private props: CustomerProps;
 
-  constructor(
-    props: Replace<CustomerProps, { createdAt?: Date }>,
-    identity: string,
-  ) {
+  constructor(props: Replace<CustomerProps, { createdAt?: Date }>, identity: string) {
     this._identity = identity;
     this.props = {
       ...props,
@@ -63,5 +61,13 @@ export class Customer {
 
   public get phone(): string {
     return this.props.phone;
+  }
+
+  public set category(category: string) {
+    this.props.category = category;
+  }
+
+  public get category(): string {
+    return this.props.category;
   }
 }

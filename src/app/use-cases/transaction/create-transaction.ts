@@ -17,6 +17,7 @@ interface CreateTransactionRequest {
   customerIdentity: string;
   customerName: string;
   customerPhone: string;
+  customerCategory: string;
   productCode: string;
   productDescription: string;
   productPrice: number;
@@ -55,6 +56,7 @@ export class CreateTransaction {
       customerIdentity,
       customerName,
       customerPhone,
+      customerCategory,
       productCode,
       productDescription,
       productPrice,
@@ -89,6 +91,7 @@ export class CreateTransaction {
           email: customerEmail,
           name: customerName,
           phone: customerPhone,
+          category: customerCategory,
         },
         identity,
       ),
