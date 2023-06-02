@@ -305,7 +305,7 @@ export class TransactionController {
     });
 
     return {
-      transactions: transactions,
+      transactions,
     };
   }
 }
