@@ -91,6 +91,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
               select: {
                 name: true,
                 identity: true,
+                category: true,
               },
             },
           },
