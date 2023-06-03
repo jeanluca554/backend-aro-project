@@ -5,6 +5,7 @@ import { TransactionController } from './controllers/transaction.controller';
 import { CreateTransaction } from '@app/use-cases/transaction/create-transaction';
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
+import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
 import { Safe2PayTransactionService } from '@infra/providers/safe2PayTransaction.service';
 import { HttpTransactionSafe2Pay } from '@infra/providers/httpTransactionSafe2pay.service';
 
@@ -16,6 +17,7 @@ import { HttpTransactionSafe2Pay } from '@infra/providers/httpTransactionSafe2pa
     Safe2PayTransactionService,
     CreateCustomerTransaction,
     CreateUnsuccessfullyTransaction,
+    GetTransactions,
     HttpTransactionSafe2Pay,
   ],
 })

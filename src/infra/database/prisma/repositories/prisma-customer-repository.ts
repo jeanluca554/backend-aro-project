@@ -22,6 +22,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
       identity,
       name,
       phone,
+      category,
     } = PrismaCustomerMapper.toPrisma(customer);
 
     await this.prismaService.customer.upsert({
@@ -36,6 +37,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
         addressZipCode,
         name,
         phone,
+        category,
       },
       create: {
         addressCity,
@@ -49,6 +51,7 @@ export class PrismaCustomerRepository implements CustomerRepository {
         identity,
         name,
         phone,
+        category,
       },
     });
   }

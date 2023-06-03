@@ -9,7 +9,7 @@ export class PrismaTransactionMapper {
       paymentMethod: transaction.paymentMethod,
       status: transaction.status,
       message: transaction.message,
-      cardToken: transaction.cardToken,
+      transactionToken: transaction.transactionToken,
       installments: transaction.installments,
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,
@@ -20,34 +20,4 @@ export class PrismaTransactionMapper {
       authorizationCode: transaction.authorizationCode,
     };
   }
-
-  // static toDomain(raw: RawTransaction): Transaction {
-  //   return new Transaction(
-  //     {
-  //       paymentMethod: raw.paymentMethod,
-  //     //   creditCardHolder: raw.,
-  //     // creditCardCardNumber: raw.,
-  //     // creditCardExpirationDate: raw.,
-  //     // creditCardSecurityCode: raw.,
-  //     creditCardInstallmentQuantity: raw.,
-  //     addressCity: raw.,
-  //     addressComplement: raw.,
-  //     addressDistrict: raw.,
-  //     addressNumber: raw.,
-  //     addressStateInitials: raw.,
-  //     addressStreet: raw.,
-  //     addressZipCode: raw.,
-  //     courseCode: raw.,
-  //     courseDescription: raw.,
-  //     courseUnitPrice: raw.,
-  //     customerEmail: raw.,
-  //     customerIdentity: raw.,
-  //     customerName: raw.,
-  //     customerPhone: raw.,
-  //       canceledAt: raw.canceledAt,
-  //       createdAt: raw.createdAt,
-  //     },
-  //     raw.id,
-  //   );
-  // }
 }

@@ -1,13 +1,9 @@
-import { Notification } from '@app/entities/notification';
+import { Notification } from '@app/entities/notification/notification';
 import { NotificationsRepository } from '@app/repositories/notifications-repository';
 
-export class InMemoryNotificationsRepository
-  implements NotificationsRepository
-{
+export class InMemoryNotificationsRepository implements NotificationsRepository {
   async findById(notificationId: string): Promise<Notification | null> {
-    const notification = this.notifications.find(
-      (item) => item.id === notificationId,
-    );
+    const notification = this.notifications.find((item) => item.id === notificationId);
 
     if (!notification) {
       return null;

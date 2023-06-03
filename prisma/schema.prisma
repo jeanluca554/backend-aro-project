@@ -38,12 +38,14 @@ model Transaction {
   paymentMethod     String
   message           String?
   status            Int?
-  cardToken         String?
+  transactionToken  String?
   installments      Int
   discount          Decimal?
   description       String?
   tid               String?
   authorizationCode String?
+  pixQrCode         String?
+  pixKey            String?
   canceledAt        DateTime?
   createdAt         DateTime                 @default(now())
   customer          Customer                 @relation(fields: [customerId], references: [identity])
@@ -68,7 +70,7 @@ model TransactionUnsuccessfully {
 model Product {
   id           String                   @id
   description  String
-  price        Decimal
+  price        Int
   transactions ProductsOnTransactions[]
 
   @@map("product")
@@ -91,6 +93,7 @@ model Customer {
   identity                   String                      @id @unique
   name                       String
   phone                      String
+  category                   String
   addressCity                String
   addressComplement          String
   addressDistrict            String

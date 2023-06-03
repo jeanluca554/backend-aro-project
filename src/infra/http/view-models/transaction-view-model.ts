@@ -1,17 +1,33 @@
 import { Transaction } from '@app/entities/transaction/transaction';
 
+type ProductsOnTransactionsType = {
+  transactionId: string;
+  productId: string;
+};
+
 export class TransactionViewModel {
   static toHTTP(transaction: Transaction) {
     return {
       // content: transaction.paymentMethod,
       // customer: transaction.customer,
       // product: transaction.product,
-      installments: transaction.installments,
+      //installments: transaction.installments,
       message: transaction.message,
       status: transaction.status,
-      discount: transaction.discount,
-      cardToken: transaction.cardToken,
+      //discount: transaction.discount,
+      //transactionToken: transaction.transactionToken,
       description: transaction.description,
+      pixQrCode: transaction.pixQrCode,
+    };
+  }
+
+  static toHTTPTransaction(transaction: ProductsOnTransactionsType) {
+    return {
+      // content: transaction.paymentMethod,
+      // customer: transaction.customer,
+      // product: transaction.product,
+      transactionId: transaction.transactionId,
+      productId: transaction.productId,
     };
   }
 

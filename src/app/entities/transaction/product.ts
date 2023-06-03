@@ -2,7 +2,7 @@ import { Replace } from 'src/helpers/Replace';
 import { BaseEntity } from '../base-entity';
 
 export interface ProductProps {
-  description?: string;
+  description: string;
   price: number;
   // createdAt: Date;
 }
@@ -22,11 +22,11 @@ export class Product extends BaseEntity {
   //   return this.props.createdAt;
   // }
 
-  public set description(description: string | undefined) {
+  public set description(description: string) {
     this.props.description = description;
   }
 
-  public get description(): string | undefined {
+  public get description(): string {
     return this.props.description;
   }
 

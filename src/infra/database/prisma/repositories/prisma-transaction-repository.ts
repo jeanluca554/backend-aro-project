@@ -12,7 +12,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
   async create(transaction: Transaction): Promise<void> {
     const {
       canceledAt,
-      cardToken,
+      transactionToken,
       createdAt,
       customerId,
       discount,
@@ -33,7 +33,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
         installments,
         paymentMethod,
         canceledAt,
-        cardToken,
+        transactionToken,
         createdAt,
         customerId,
         discount,
@@ -57,9 +57,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
     });
   }
 
-  async createUnsuccessfullyTransaction(
-    transaction: Transaction,
-  ): Promise<void> {
+  async createUnsuccessfullyTransaction(transaction: Transaction): Promise<void> {
     const { createdAt, customerId, errorCode, id, message, paymentMethod } =
       PrismaUnsuccessfullyTransactionMapper.toPrisma(transaction);
 
@@ -73,6 +71,64 @@ export class PrismaTransactionRepository implements TransactionRepository {
         createdAt,
         customerId,
       },
+    });
+  }
+
+  // async findManyByProductId(productId: string): Promise<Transaction[]> {
+  async findManyByProductId(productId: string): Promise<any[]> {
+    const transactions = await this.prismaService.productsOnTransactions.findMany({
+      where: {
+        productId,
+      },
+      select: {
+        transaction: {
+          select: {
+            createdAt: true,
+            paymentMethod: true,
+            installments: true,
+            id: true,
+            customer: {
+              select: {
+                name: true,
+                identity: true,
+                category: true,
+              },
+            },
+          },
+        },
+        product: {
+          select: {
+            description: true,
+            price: true,
+          },
+        },
+      },
+
+      // select: {
+      //   id: true,
+      //   customer: {
+      //     select: {
+      //       name: true,
+      //       identity: true,
+      //     },
+      //   },
+      //   products: {
+      //     select: {
+      //       product: {
+
+      //       }
+      //     },
+      //   },
+      //   metodoPagamento: true,
+      //   parcelas: true,
+      // },
+    });
+
+    console.log(transactions);
+    // return transactions;
+    return transactions.map((transaction) => {
+      // return PrismaTransactionMapper.toDomain(transaction);
+      return transaction;
     });
   }
 }

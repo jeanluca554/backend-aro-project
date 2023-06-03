@@ -11,12 +11,14 @@ export interface TransactionProps {
   message?: string;
   status?: number;
   discount?: number | null;
-  cardToken?: string;
+  transactionToken?: string;
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
   description?: string;
   tid?: string;
+  pixQrCode?: string;
+  pixKey?: string;
   authorizationCode?: string;
   canceledAt?: Date | null;
   createdAt: Date;
@@ -25,10 +27,7 @@ export interface TransactionProps {
 export class Transaction extends BaseEntity {
   private props: TransactionProps;
 
-  constructor(
-    props: Replace<TransactionProps, { createdAt?: Date }>,
-    id?: string,
-  ) {
+  constructor(props: Replace<TransactionProps, { createdAt?: Date }>, id?: string) {
     super(id);
     this.props = {
       ...props,
@@ -64,12 +63,12 @@ export class Transaction extends BaseEntity {
     return this.props.message;
   }
 
-  public set cardToken(cardToken: string | undefined) {
-    this.props.cardToken = cardToken;
+  public set transactionToken(transactionToken: string | undefined) {
+    this.props.transactionToken = transactionToken;
   }
 
-  public get cardToken(): string | undefined {
-    return this.props.cardToken;
+  public get transactionToken(): string | undefined {
+    return this.props.transactionToken;
   }
 
   public set installments(installments: number) {
@@ -126,6 +125,22 @@ export class Transaction extends BaseEntity {
 
   public get tid(): string | undefined {
     return this.props.tid;
+  }
+
+  public set pixQrCode(pixQrCode: string | undefined) {
+    this.props.pixQrCode = pixQrCode;
+  }
+
+  public get pixQrCode(): string | undefined {
+    return this.props.pixQrCode;
+  }
+
+  public set pixKey(pixKey: string | undefined) {
+    this.props.pixKey = pixKey;
+  }
+
+  public get pixKey(): string | undefined {
+    return this.props.pixKey;
   }
 
   public set authorizationCode(authorizationCode: string | undefined) {

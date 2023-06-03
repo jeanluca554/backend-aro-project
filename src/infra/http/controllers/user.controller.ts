@@ -3,6 +3,7 @@ import { CreateUser } from '@app/use-cases/user/create-user';
 import { FindUsers } from '@app/use-cases/user/find-user';
 import { CreateUserBody } from '../dtos/create-user-body';
 import { UserViewModel } from '../view-models/user-view-model';
+import { IsPublic } from '@infra/decorators/is-public.decorator';
 
 @Controller('user')
 export class UserController {

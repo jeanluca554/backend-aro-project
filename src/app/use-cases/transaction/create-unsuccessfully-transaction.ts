@@ -17,15 +17,16 @@ interface CreateTransactionRequest {
   customerIdentity: string;
   customerName: string;
   customerPhone: string;
+  customerCategory: string;
   productCode: string;
-  productDescription: string | undefined;
+  productDescription: string;
   productPrice: number;
   paymentMethod: string;
   installments: number;
   message: string | undefined;
   status: number | undefined;
   discount?: number;
-  cardToken?: string;
+  transactionToken?: string;
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
@@ -38,9 +39,7 @@ interface CreateTransactionResponse {
 export class CreateUnsuccessfullyTransaction {
   constructor(private transactionRepository: TransactionRepository) {}
 
-  async execute(
-    request: CreateTransactionRequest,
-  ): Promise<CreateTransactionResponse> {
+  async execute(request: CreateTransactionRequest): Promise<CreateTransactionResponse> {
     const {
       addressCity,
       addressComplement,
@@ -53,6 +52,7 @@ export class CreateUnsuccessfullyTransaction {
       customerIdentity,
       customerName,
       customerPhone,
+      customerCategory,
       productCode,
       productDescription,
       productPrice,
@@ -61,7 +61,7 @@ export class CreateUnsuccessfullyTransaction {
       message,
       status,
       discount,
-      cardToken,
+      transactionToken,
       hasError,
       errorCode,
       errorMessage,
@@ -84,6 +84,7 @@ export class CreateUnsuccessfullyTransaction {
           email: customerEmail,
           name: customerName,
           phone: customerPhone,
+          category: customerCategory,
         },
         identity,
       ),
@@ -95,7 +96,7 @@ export class CreateUnsuccessfullyTransaction {
         productCode,
       ),
       discount,
-      cardToken,
+      transactionToken,
       installments,
       message,
       paymentMethod,
@@ -105,10 +106,10 @@ export class CreateUnsuccessfullyTransaction {
       errorMessage,
     });
 
-    const transactionPrisma =
-      await this.transactionRepository.createUnsuccessfullyTransaction(
-        transaction,
-      );
+    await this.transactionRepository.createUnsuccessfullyTransaction(transaction);
+    //const transactionPrisma = await this.transactionRepository.createUnsuccessfullyTransaction(
+    //  transaction,
+    //);
 
     console.log('transactionPrisma');
     console.log(transaction);

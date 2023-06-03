@@ -87,6 +87,10 @@ export class CreateTransactionBody {
 
   @IsNotEmpty()
   @IsString()
+  customerCategory: string;
+
+  @IsNotEmpty()
+  @IsString()
   paymentMethod: string;
 
   @IsNumber()

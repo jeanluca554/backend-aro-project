@@ -9,6 +9,7 @@ export class PrismaCustomerMapper {
       identity: customer.id,
       name: customer.name,
       phone: customer.phone,
+      category: customer.category,
       addressCity: customer.address.city,
       addressComplement: customer.address.complement,
       addressDistrict: customer.address.district,

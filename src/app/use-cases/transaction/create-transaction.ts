@@ -17,20 +17,24 @@ interface CreateTransactionRequest {
   customerIdentity: string;
   customerName: string;
   customerPhone: string;
+  customerCategory: string;
   productCode: string;
-  productDescription: string | undefined;
+  productDescription: string;
   productPrice: number;
   paymentMethod: string;
   installments: number;
   message: string | undefined;
   status: number | undefined;
   discount?: number;
-  cardToken?: string;
+  transactionToken?: string;
   hasError: boolean;
   description?: string;
   tid?: string;
   authorizationCode?: string;
+  pixQrCode?: string;
+  pixKey?: string;
 }
+
 interface CreateTransactionResponse {
   transaction: Transaction;
 }
@@ -39,9 +43,7 @@ interface CreateTransactionResponse {
 export class CreateTransaction {
   constructor(private transactionRepository: TransactionRepository) {}
 
-  async execute(
-    request: CreateTransactionRequest,
-  ): Promise<CreateTransactionResponse> {
+  async execute(request: CreateTransactionRequest): Promise<CreateTransactionResponse> {
     const {
       addressCity,
       addressComplement,
@@ -54,6 +56,7 @@ export class CreateTransaction {
       customerIdentity,
       customerName,
       customerPhone,
+      customerCategory,
       productCode,
       productDescription,
       productPrice,
@@ -62,11 +65,13 @@ export class CreateTransaction {
       message,
       status,
       discount,
-      cardToken,
+      transactionToken,
       hasError,
       authorizationCode,
       description,
       tid,
+      pixQrCode,
+      pixKey,
     } = request;
 
     const identity = customerIdentity;
@@ -86,6 +91,7 @@ export class CreateTransaction {
           email: customerEmail,
           name: customerName,
           phone: customerPhone,
+          category: customerCategory,
         },
         identity,
       ),
@@ -97,7 +103,7 @@ export class CreateTransaction {
         productCode,
       ),
       discount,
-      cardToken,
+      transactionToken,
       installments,
       message,
       paymentMethod,
@@ -106,6 +112,8 @@ export class CreateTransaction {
       authorizationCode,
       description,
       tid,
+      pixKey,
+      pixQrCode,
     });
 
     await this.transactionRepository.create(transaction);
