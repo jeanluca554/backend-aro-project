@@ -2,6 +2,7 @@ import { CreateTransaction } from '@app/use-cases/transaction/create-transaction
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
 import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
+import { GetTransaction } from '@app/use-cases/transaction/get-transaction-by-id';
 import { IsPublic } from '@infra/decorators/is-public.decorator';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTransactionBody } from '../dtos/create-transaction';
@@ -18,6 +19,7 @@ export class TransactionController {
     private createTransaction: CreateTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
     private getTransaction: GetTransactions,
+    private getTransactionById: GetTransaction,
   ) {}
 
   @IsPublic()
@@ -313,6 +315,18 @@ export class TransactionController {
 
     return {
       transactions,
+    };
+  }
+
+  @IsPublic()
+  @Get('from/:transactionId')
+  async getFromRecipient(@Param('transactionId') transactionId: string) {
+    const { transaction } = await this.getTransactionById.execute({
+      transactionId,
+    });
+
+    return {
+      transaction,
     };
   }
 }

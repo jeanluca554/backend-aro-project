@@ -22,6 +22,7 @@ export function makeTransaction(override: Override = {}) {
       email: 'test@gmail.com',
       name: 'Customer Name Example',
       phone: '9999999999',
+      category: 'student',
     },
     '693.138.520-80',
   );
