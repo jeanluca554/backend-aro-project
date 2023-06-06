@@ -29,6 +29,9 @@ export class CreateTransactionBody {
   @Max(3)
   creditCardInstallmentQuantity: number;
 
+  @IsString()
+  creditCardIdentity: string;
+
   @IsNotEmpty()
   @IsString()
   courseCode: string;

@@ -169,6 +169,7 @@ export class TransactionController {
       creditCardExpirationDate,
       creditCardSecurityCode,
       creditCardInstallmentQuantity,
+      creditCardIdentity,
       addressCity,
       addressComplement,
       addressDistrict,
@@ -186,6 +187,12 @@ export class TransactionController {
       customerCategory,
       discount,
     } = body;
+
+    let creditCardIdentityForSafe2Pay;
+
+    creditCardIdentity.length > 0
+      ? (creditCardIdentityForSafe2Pay = creditCardIdentity)
+      : (creditCardIdentityForSafe2Pay = customerIdentity);
 
     const transactionSafe2pay = await this.httpTransactionSafe2Pay.processAxios({
       paymentMethod,
@@ -205,7 +212,7 @@ export class TransactionController {
       courseDescription,
       courseUnitPrice,
       customerEmail,
-      customerIdentity,
+      customerIdentity: creditCardIdentityForSafe2Pay,
       customerName,
       customerPhone,
     });
