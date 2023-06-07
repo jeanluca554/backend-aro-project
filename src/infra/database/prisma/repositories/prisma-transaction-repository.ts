@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Transaction } from '@app/entities/transaction/transaction';
 import { TransactionRepository } from '@app/repositories/transaction-repository';
 import { PrismaService } from '../prisma.service';
-import { PrismaTransactionMapper } from '../mappers/prisma-transaction-mapper';
+import {
+  PrismaTransactionMapper,
+  TransactionToDomain,
+} from '../mappers/prisma-transaction-mapper';
 import { PrismaUnsuccessfullyTransactionMapper } from '../mappers/prisma-unsuccessfully-transaction-mapper';
 
 @Injectable()
@@ -103,25 +106,6 @@ export class PrismaTransactionRepository implements TransactionRepository {
           },
         },
       },
-
-      // select: {
-      //   id: true,
-      //   customer: {
-      //     select: {
-      //       name: true,
-      //       identity: true,
-      //     },
-      //   },
-      //   products: {
-      //     select: {
-      //       product: {
-
-      //       }
-      //     },
-      //   },
-      //   metodoPagamento: true,
-      //   parcelas: true,
-      // },
     });
 
     console.log(transactions);
@@ -130,5 +114,18 @@ export class PrismaTransactionRepository implements TransactionRepository {
       // return PrismaTransactionMapper.toDomain(transaction);
       return transaction;
     });
+  }
+
+  async findUniqueByTransactionId(transactionId: string): Promise<TransactionToDomain | null> {
+    const transaction = await this.prismaService.transaction.findUnique({
+      where: {
+        id: transactionId,
+      },
+    });
+    if (!transaction) {
+      return null;
+    }
+
+    return PrismaTransactionMapper.toDomain(transaction);
   }
 }

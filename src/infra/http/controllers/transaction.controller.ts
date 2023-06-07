@@ -2,6 +2,7 @@ import { CreateTransaction } from '@app/use-cases/transaction/create-transaction
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
 import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
+import { GetTransaction } from '@app/use-cases/transaction/get-transaction-by-id';
 import { IsPublic } from '@infra/decorators/is-public.decorator';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTransactionBody } from '../dtos/create-transaction';
@@ -18,6 +19,7 @@ export class TransactionController {
     private createTransaction: CreateTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
     private getTransaction: GetTransactions,
+    private getTransactionById: GetTransaction,
   ) {}
 
   @IsPublic()
@@ -169,6 +171,7 @@ export class TransactionController {
       creditCardExpirationDate,
       creditCardSecurityCode,
       creditCardInstallmentQuantity,
+      creditCardIdentity,
       addressCity,
       addressComplement,
       addressDistrict,
@@ -186,6 +189,12 @@ export class TransactionController {
       customerCategory,
       discount,
     } = body;
+
+    let creditCardIdentityForSafe2Pay;
+
+    creditCardIdentity.length > 0
+      ? (creditCardIdentityForSafe2Pay = creditCardIdentity)
+      : (creditCardIdentityForSafe2Pay = customerIdentity);
 
     const transactionSafe2pay = await this.httpTransactionSafe2Pay.processAxios({
       paymentMethod,
@@ -205,7 +214,7 @@ export class TransactionController {
       courseDescription,
       courseUnitPrice,
       customerEmail,
-      customerIdentity,
+      customerIdentity: creditCardIdentityForSafe2Pay,
       customerName,
       customerPhone,
     });
@@ -306,6 +315,18 @@ export class TransactionController {
 
     return {
       transactions,
+    };
+  }
+
+  @IsPublic()
+  @Get('from/:transactionId')
+  async getFromRecipient(@Param('transactionId') transactionId: string) {
+    const { transaction } = await this.getTransactionById.execute({
+      transactionId,
+    });
+
+    return {
+      transaction,
     };
   }
 }

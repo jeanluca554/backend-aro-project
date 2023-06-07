@@ -18,6 +18,7 @@ export class TransactionViewModel {
       //transactionToken: transaction.transactionToken,
       description: transaction.description,
       pixQrCode: transaction.pixQrCode,
+      idTransaction: transaction.id,
     };
   }
 

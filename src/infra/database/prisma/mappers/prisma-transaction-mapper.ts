@@ -1,5 +1,10 @@
-// import { Notification as RawNotification } from '@prisma/client';
+import { Transaction as RawTransaction } from '@prisma/client';
 import { Transaction } from '@app/entities/transaction/transaction';
+
+export type TransactionToDomain = {
+  customerId: string;
+  idTransaction: string;
+};
 
 export class PrismaTransactionMapper {
   static toPrisma(transaction: Transaction) {
@@ -18,6 +23,13 @@ export class PrismaTransactionMapper {
       description: transaction.description,
       tid: transaction.tid,
       authorizationCode: transaction.authorizationCode,
+    };
+  }
+
+  static toDomain(raw: RawTransaction): TransactionToDomain {
+    return {
+      idTransaction: raw.id,
+      customerId: raw.customerId,
     };
   }
 }
