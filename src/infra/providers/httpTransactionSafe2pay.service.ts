@@ -146,21 +146,21 @@ export class HttpTransactionSafe2Pay {
 
     if (request.paymentMethod === '6') {
       //Use this on production
-      //formattedData = formatPixData(request);
+      formattedData = formatPixData(request);
 
-      return (formattedData = {
-        /*eslint-disable*/
-        "ResponseDetail": {
-          "IdTransaction": "1044125",
-          "Status": 1,
-          "Message": "Pagamento Pendente",
-          "Description": "Estamos aguardando a transferência do valor. Após a confirmação, o pagamento pode levar até 10 segundos para ser compensado.",
-          "QrCode": "https://repository.safe2pay.com.br/qr/cb2b8a2f-464a-4323-a77d-b30370038a6a",
-          "Key": "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426655440000 5204000053039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D"
-        },
-        "HasError": false
-        /*eslint-enable*/
-      });
+      // return (formattedData = {
+      //   /*eslint-disable*/
+      //   "ResponseDetail": {
+      //     "IdTransaction": "1044125",
+      //     "Status": 1,
+      //     "Message": "Pagamento Pendente",
+      //     "Description": "Estamos aguardando a transferência do valor. Após a confirmação, o pagamento pode levar até 10 segundos para ser compensado.",
+      //     "QrCode": "https://repository.safe2pay.com.br/qr/cb2b8a2f-464a-4323-a77d-b30370038a6a",
+      //     "Key": "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426655440000 5204000053039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D"
+      //   },
+      //   "HasError": false
+      //   /*eslint-enable*/
+      // });
     }
 
     if (request.paymentMethod === '2') {
