@@ -23,7 +23,7 @@ export class CreateTransactionBody {
   @IsString()
   creditCardSecurityCode: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsInt()
   @Min(1)
   @Max(3)
