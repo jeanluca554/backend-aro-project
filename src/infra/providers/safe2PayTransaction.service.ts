@@ -117,9 +117,7 @@ export class Safe2PayTransactionService {
     payload.PaymentObject = creditCard;
 
     //Lista de produtos incluídos na cobrança
-    payload.Products.push(
-      new Product(courseCode, courseDescription, courseUnitPrice, 1),
-    );
+    payload.Products.push(new Product(courseCode, courseDescription, courseUnitPrice, 1));
 
     //Dados do endereço do cliente
     const address = new Address();
