@@ -70,7 +70,8 @@ function formatData(data: TransactionRequest) {
       {
         "Code": data.courseCode,
         "Description": data.courseDescription,
-        "UnitPrice": data.courseUnitPrice,
+        // "UnitPrice": data.courseUnitPrice,
+        "UnitPrice": 10.00,
         "Quantity": 1
       }
     ],
@@ -91,7 +92,7 @@ function formatData(data: TransactionRequest) {
 function formatPixData(data: TransactionRequest) {
   const response = {
     /*eslint-disable*/
-    "IsSandbox": true,
+    "IsSandbox": false,
     "Application": "Pagamento Safe2Pay",
     "Vendor": "Instituto Aro",
     "CallbackUrl": "https://callbacks.exemplo.com.br/api/Notify",
@@ -116,7 +117,8 @@ function formatPixData(data: TransactionRequest) {
       {
         "Code": data.courseCode,
         "Description": data.courseDescription,
-        "UnitPrice": data.courseUnitPrice,
+        "UnitPrice": 10.00,
+        // "UnitPrice": data.courseUnitPrice,
         "Quantity": 1
       }
     ],
