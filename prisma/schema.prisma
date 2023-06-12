@@ -89,7 +89,7 @@ model ProductsOnTransactions {
 }
 
 model Customer {
-  email                      String                      @unique
+  email                      String
   identity                   String                      @id @unique
   name                       String
   phone                      String
