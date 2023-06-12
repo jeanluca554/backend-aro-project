@@ -45,7 +45,7 @@ export interface TransactionResponse {
 function formatData(data: TransactionRequest) {
   const response = {
     /*eslint-disable*/
-    "IsSandbox": false,
+    "IsSandbox": true,
     "Application": "Pagamento Safe2Pay",
     "Vendor": "Instituto Aro",
     "CallbackUrl": "https://callbacks.exemplo.com.br/api/Notify",
