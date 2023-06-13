@@ -295,8 +295,8 @@ export class TransactionController {
         authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
         description: transactionSafe2pay.ResponseDetail?.Description,
         tid: transactionSafe2pay.ResponseDetail?.Tid,
-        pixQrCode: transactionSafe2pay.ResponseDetail?.QrCode,
-        pixKey: transactionSafe2pay.ResponseDetail?.Key,
+        pixQrCode: transactionSafe2pay.ResponseDetail?.pixQrCode,
+        pixKey: transactionSafe2pay.ResponseDetail?.pixKey,
       });
 
       console.log(transaction);

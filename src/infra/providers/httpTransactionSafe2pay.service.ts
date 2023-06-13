@@ -34,8 +34,8 @@ export interface TransactionResponse {
     Token?: string;
     Tid?: string;
     AuthorizationCode?: string;
-    QrCode?: string;
-    Key?: string;
+    pixQrCode?: string;
+    pixKey?: string;
   };
   HasError: boolean;
   ErrorCode?: string;
@@ -97,6 +97,7 @@ function formatPixData(data: TransactionRequest) {
     "Vendor": "Instituto Aro",
     "CallbackUrl": "https://callbacks.exemplo.com.br/api/Notify",
     "PaymentMethod": data.paymentMethod,
+    "Reference": "TESTE",
     "Customer": {
       "Name": data.customerName,
       "Identity": data.customerIdentity,
@@ -122,8 +123,9 @@ function formatPixData(data: TransactionRequest) {
         "Quantity": 1
       }
     ],
-    /*eslint-enable*/
   };
+  /*eslint-enable*/
+  console.log(response);
 
   return response;
 }
@@ -146,34 +148,41 @@ export class HttpTransactionSafe2Pay {
 
     if (request.paymentMethod === '6') {
       //Use this on production
-      formattedData = formatPixData(request);
+      // formattedData = formatPixData(request);
 
-      // return (formattedData = {
-      //   /*eslint-disable*/
-      //   "ResponseDetail": {
-      //     "IdTransaction": "1044125",
-      //     "Status": 1,
-      //     "Message": "Pagamento Pendente",
-      //     "Description": "Estamos aguardando a transferência do valor. Após a confirmação, o pagamento pode levar até 10 segundos para ser compensado.",
-      //     "QrCode": "https://repository.safe2pay.com.br/qr/cb2b8a2f-464a-4323-a77d-b30370038a6a",
-      //     "Key": "00020126580014br.gov.bcb.pix0136123e4567-e12b-12d1-a456-426655440000 5204000053039865802BR5913Fulano de Tal6008BRASILIA62070503***63041D3D"
-      //   },
-      //   "HasError": false
-      //   /*eslint-enable*/
-      // });
+      return (formattedData = {
+        /*eslint-disable*/
+        "ResponseDetail": {
+          "IdTransaction": "1044125",
+          "Status": 1,
+          "Message": "Pagamento Pendente",
+          "Description": "Estamos aguardando a transferência do valor. Após a confirmação, o pagamento pode levar até 5 minutos para ser compensado.",
+          "pixQrCode": "https://images.safe2pay.com.br/pix/d61a1c3bd1c8460bb15684a7e1bf0cc6.png",
+          "pixKey": "00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/f418c013-1010-4437-ab2b-8eea015f559a520400005303986540510.005802BR5908SAFE2PAY6012PORTO ALEGRE62070503***63043EC3"
+        },
+        "HasError": false
+        /*eslint-enable*/
+      });
     }
 
     if (request.paymentMethod === '2') {
       formattedData = formatData(request);
     }
 
-    const paymentResponse = await lastValueFrom(
-      this.httpService.post(url, formattedData, config),
-    );
+    try {
+      const paymentResponse = await lastValueFrom(
+        this.httpService.post(url, formattedData, config),
+      );
 
-    const paymentResponseFormatted = paymentResponse.data;
-    console.log(paymentResponseFormatted);
+      const paymentResponseFormatted = paymentResponse.data;
+      console.log(paymentResponseFormatted);
+      // console.log(paymentResponse);
 
-    return paymentResponseFormatted;
+      return paymentResponseFormatted;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return { HasError: true, Error: 'Error httpTransactionSafe2pay' };
   }
 }
