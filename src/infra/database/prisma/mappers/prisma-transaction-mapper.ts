@@ -12,7 +12,7 @@ export class PrismaTransactionMapper {
       id: transaction.id,
       customerId: transaction.customer.id,
       paymentMethod: transaction.paymentMethod,
-      status: transaction.status,
+      status: Number(transaction.status),
       message: transaction.message,
       transactionToken: transaction.transactionToken,
       installments: transaction.installments,
