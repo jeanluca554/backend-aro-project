@@ -28,6 +28,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
       description,
       authorizationCode,
       tid,
+      pixKey,
     } = PrismaTransactionMapper.toPrisma(transaction);
 
     await this.prismaService.transaction.create({
@@ -45,6 +46,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
         description,
         authorizationCode,
         tid,
+        pixKey,
         products: {
           create: [
             {

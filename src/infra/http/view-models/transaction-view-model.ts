@@ -17,7 +17,8 @@ export class TransactionViewModel {
       //discount: transaction.discount,
       //transactionToken: transaction.transactionToken,
       description: transaction.description,
-      pixQrCode: transaction.pixQrCode,
+      pixKey: transaction.pixKey,
+      // pixQrCode: transaction.pixQrCode,
       idTransaction: transaction.id,
     };
   }

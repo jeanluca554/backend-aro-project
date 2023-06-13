@@ -23,6 +23,7 @@ export class PrismaTransactionMapper {
       description: transaction.description,
       tid: transaction.tid,
       authorizationCode: transaction.authorizationCode,
+      pixKey: transaction.pixKey,
     };
   }
 
