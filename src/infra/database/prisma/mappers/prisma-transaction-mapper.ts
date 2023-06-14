@@ -24,6 +24,7 @@ export class PrismaTransactionMapper {
       tid: transaction.tid,
       authorizationCode: transaction.authorizationCode,
       pixKey: transaction.pixKey,
+      idTransactionSafe2Pay: transaction.idTransactionSafe2Pay,
     };
   }
 

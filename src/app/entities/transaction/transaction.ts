@@ -19,6 +19,7 @@ export interface TransactionProps {
   tid?: string;
   pixQrCode?: string;
   pixKey?: string;
+  idTransactionSafe2Pay?: string;
   authorizationCode?: string;
   canceledAt?: Date | null;
   createdAt: Date;
@@ -141,6 +142,14 @@ export class Transaction extends BaseEntity {
 
   public get pixKey(): string | undefined {
     return this.props.pixKey;
+  }
+
+  public set idTransactionSafe2Pay(idTransactionSafe2Pay: string | undefined) {
+    this.props.idTransactionSafe2Pay = idTransactionSafe2Pay;
+  }
+
+  public get idTransactionSafe2Pay(): string | undefined {
+    return this.props.idTransactionSafe2Pay;
   }
 
   public set authorizationCode(authorizationCode: string | undefined) {

@@ -33,6 +33,7 @@ interface CreateTransactionRequest {
   authorizationCode?: string;
   pixQrCode?: string;
   pixKey?: string;
+  idTransactionSafe2Pay?: string;
 }
 
 interface CreateTransactionResponse {
@@ -72,6 +73,7 @@ export class CreateTransaction {
       tid,
       pixQrCode,
       pixKey,
+      idTransactionSafe2Pay,
     } = request;
 
     const identity = customerIdentity;
@@ -114,6 +116,7 @@ export class CreateTransaction {
       tid,
       pixKey,
       pixQrCode,
+      idTransactionSafe2Pay,
     });
 
     await this.transactionRepository.create(transaction);

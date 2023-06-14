@@ -33,23 +33,24 @@ model User {
 }
 
 model Transaction {
-  id                String                   @id
-  customerId        String
-  paymentMethod     String
-  message           String?
-  status            Int?
-  transactionToken  String?
-  installments      Int?
-  discount          Decimal?
-  description       String?
-  tid               String?
-  authorizationCode String?
-  pixQrCode         String?
-  pixKey            String?
-  canceledAt        DateTime?
-  createdAt         DateTime                 @default(now())
-  customer          Customer                 @relation(fields: [customerId], references: [identity])
-  products          ProductsOnTransactions[]
+  id                    String                   @id
+  customerId            String
+  paymentMethod         String
+  message               String?
+  status                Int?
+  transactionToken      String?
+  installments          Int?
+  discount              Decimal?
+  description           String?
+  tid                   String?
+  authorizationCode     String?
+  pixQrCode             String?
+  pixKey                String?
+  idTransactionSafe2Pay String?
+  canceledAt            DateTime?
+  createdAt             DateTime                 @default(now())
+  customer              Customer                 @relation(fields: [customerId], references: [identity])
+  products              ProductsOnTransactions[]
 
   @@map("transaction")
 }
