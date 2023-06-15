@@ -69,6 +69,14 @@ export class CreateUnsuccessfullyTransaction {
 
     const identity = customerIdentity;
 
+    const products = [
+      {
+        description: productDescription,
+        price: productPrice,
+        productCode: productCode,
+      },
+    ];
+
     const transaction = new Transaction({
       customer: new Customer(
         {
@@ -88,13 +96,15 @@ export class CreateUnsuccessfullyTransaction {
         },
         identity,
       ),
-      product: new Product(
-        {
-          description: productDescription,
-          price: productPrice,
-        },
-        productCode,
-      ),
+      product: products.map((item) => {
+        return new Product(
+          {
+            description: item.description,
+            price: item.price,
+          },
+          item.productCode,
+        );
+      }),
       discount,
       transactionToken,
       installments,

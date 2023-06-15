@@ -5,7 +5,7 @@ import { Product } from './product';
 
 export interface TransactionProps {
   customer: Customer;
-  product: Product;
+  product: Product[];
   paymentMethod: string;
   installments: number;
   message?: string;
@@ -176,11 +176,15 @@ export class Transaction extends BaseEntity {
     return this.props.customer;
   }
 
-  public set product(product: Product) {
+  public get product(): Product[] {
+    return this.props.product;
+  }
+
+  public set product(product: Product[]) {
     this.props.product = product;
   }
 
-  public get product(): Product {
-    return this.props.product;
+  public setStatusAuthorized() {
+    this.status = 3;
   }
 }

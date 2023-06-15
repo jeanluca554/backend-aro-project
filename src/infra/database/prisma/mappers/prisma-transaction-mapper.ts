@@ -1,5 +1,13 @@
-import { Transaction as RawTransaction } from '@prisma/client';
+import {
+  Transaction as RawTransaction,
+  Customer as RawCustomer,
+  Product as RawProduct,
+  ProductsOnTransactions,
+} from '@prisma/client';
 import { Transaction } from '@app/entities/transaction/transaction';
+import { Customer } from '@app/entities/transaction/customer';
+import { Address } from '@app/entities/transaction/address';
+import { Product } from '@app/entities/transaction/product';
 
 export type TransactionToDomain = {
   customerId: string;
@@ -19,7 +27,7 @@ export class PrismaTransactionMapper {
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,
       createdAt: transaction.createdAt,
-      product: transaction.product.id,
+      product: transaction.product,
       description: transaction.description,
       tid: transaction.tid,
       authorizationCode: transaction.authorizationCode,
@@ -33,5 +41,45 @@ export class PrismaTransactionMapper {
       idTransaction: raw.id,
       customerId: raw.customerId,
     };
+  }
+
+  static transactionToDomain(
+    raw: RawTransaction & {
+      customer: RawCustomer;
+      products: (ProductsOnTransactions & { product: RawProduct })[];
+    },
+  ): Transaction {
+    return new Transaction({
+      customer: new Customer(
+        {
+          address: new Address({
+            city: raw.customer.addressCity,
+            complement: raw.customer.addressComplement,
+            district: raw.customer.addressDistrict,
+            number: raw.customer.addressNumber,
+            stateInitials: raw.customer.addressStateInitials,
+            street: raw.customer.addressStreet,
+            zipCode: raw.customer.addressZipCode,
+          }),
+          category: raw.customer.category,
+          email: raw.customer.email,
+          name: raw.customer.name,
+          phone: raw.customer.phone,
+        },
+        raw.customer.identity,
+      ),
+      hasError: false,
+      installments: raw.installments,
+      paymentMethod: raw.paymentMethod,
+      product: raw.products.map((item) => {
+        return new Product(
+          {
+            description: item.product.description,
+            price: item.product.price,
+          },
+          item.product.id,
+        );
+      }),
+    });
   }
 }

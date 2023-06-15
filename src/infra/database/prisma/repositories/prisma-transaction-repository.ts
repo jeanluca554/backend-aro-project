@@ -24,12 +24,12 @@ export class PrismaTransactionRepository implements TransactionRepository {
       message,
       paymentMethod,
       status,
-      product,
       description,
       authorizationCode,
-      tid,
       pixKey,
       idTransactionSafe2Pay,
+      tid,
+      product,
     } = PrismaTransactionMapper.toPrisma(transaction);
 
     await this.prismaService.transaction.create({
@@ -50,15 +50,13 @@ export class PrismaTransactionRepository implements TransactionRepository {
         pixKey,
         idTransactionSafe2Pay,
         products: {
-          create: [
-            {
-              product: {
-                connect: {
-                  id: product,
-                },
-              },
-            },
-          ],
+          createMany: {
+            data: product.map((item) => {
+              return {
+                productId: item.id,
+              };
+            }),
+          },
         },
       },
     });
@@ -132,5 +130,40 @@ export class PrismaTransactionRepository implements TransactionRepository {
     }
 
     return PrismaTransactionMapper.toDomain(transaction);
+  }
+
+  async findById(transactionId: string): Promise<Transaction | null> {
+    const transaction = await this.prismaService.transaction.findFirst({
+      where: {
+        idTransactionSafe2Pay: transactionId,
+      },
+      include: {
+        customer: true,
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    if (!transaction) {
+      return null;
+    }
+
+    console.log('Transaction no método FindFirst', transaction);
+
+    return PrismaTransactionMapper.transactionToDomain(transaction);
+  }
+
+  async save(transaction: Transaction): Promise<void> {
+    const raw = PrismaTransactionMapper.toPrisma(transaction);
+
+    await this.prismaService.transaction.update({
+      where: {
+        id: raw.id,
+      },
+      data: raw,
+    });
   }
 }

@@ -12,14 +12,10 @@ type UnreadNotificationResponse = void;
 export class UnreadNotification {
   constructor(private notificationsRepository: NotificationsRepository) {}
 
-  async execute(
-    request: UnreadNotificationRequest,
-  ): Promise<UnreadNotificationResponse> {
+  async execute(request: UnreadNotificationRequest): Promise<UnreadNotificationResponse> {
     const { notificationId } = request;
 
-    const notification = await this.notificationsRepository.findById(
-      notificationId,
-    );
+    const notification = await this.notificationsRepository.findById(notificationId);
 
     if (!notification) {
       throw new NotificationNotFound();

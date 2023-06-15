@@ -34,8 +34,8 @@ export interface TransactionResponse {
     Token?: string;
     Tid?: string;
     AuthorizationCode?: string;
-    pixQrCode?: string;
-    pixKey?: string;
+    QrCode?: string;
+    Key?: string;
   };
   HasError: boolean;
   ErrorCode?: string;
@@ -150,15 +150,16 @@ export class HttpTransactionSafe2Pay {
       //Use this on production
       // formattedData = formatPixData(request);
 
+      //Use this on sandbox
       return (formattedData = {
         /*eslint-disable*/
         "ResponseDetail": {
-          "IdTransaction": "1044125",
+          "IdTransaction": "56124007",
           "Status": 1,
           "Message": "Pagamento Pendente",
           "Description": "Estamos aguardando a transferência do valor. Após a confirmação, o pagamento pode levar até 5 minutos para ser compensado.",
-          "pixQrCode": "https://images.safe2pay.com.br/pix/d61a1c3bd1c8460bb15684a7e1bf0cc6.png",
-          "pixKey": "00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/f418c013-1010-4437-ab2b-8eea015f559a520400005303986540510.005802BR5908SAFE2PAY6012PORTO ALEGRE62070503***63043EC3"
+          "QrCode": "https://images.safe2pay.com.br/pix/6c83f56c2f894cdb8f9bdaa40ccb8420.png",
+          "Key": "00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/c53c1180-4157-429e-ac89-76e732b76586520400005303986540510.005802BR5908SAFE2PAY6012PORTO ALEGRE62070503***630486E5"
         },
         "HasError": false
         /*eslint-enable*/

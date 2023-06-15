@@ -9,6 +9,8 @@ import { CreateTransactionBody } from '../dtos/create-transaction';
 import { TransactionViewModel } from '../view-models/transaction-view-model';
 import { Safe2PayTransactionService } from '@infra/providers/safe2PayTransaction.service';
 import { HttpTransactionSafe2Pay } from '@infra/providers/httpTransactionSafe2pay.service';
+import { CreateTransactionNotificationBody } from '../dtos/create-transaction-notification-body';
+import { UpdateStatusTransaction } from '@app/use-cases/transaction/update-status-transaction';
 
 @Controller('transaction')
 export class TransactionController {
@@ -17,6 +19,7 @@ export class TransactionController {
     private httpTransactionSafe2Pay: HttpTransactionSafe2Pay,
     private createCustomer: CreateCustomerTransaction,
     private createTransaction: CreateTransaction,
+    private updateStatusTransaction: UpdateStatusTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
     private getTransaction: GetTransactions,
     private getTransactionById: GetTransaction,
@@ -297,7 +300,7 @@ export class TransactionController {
         tid: transactionSafe2pay.ResponseDetail?.Tid,
         pixQrCode: transactionSafe2pay.ResponseDetail?.QrCode,
         pixKey: transactionSafe2pay.ResponseDetail?.Key,
-        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail?.IdTransaction,
+        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail?.IdTransaction?.toString(),
       });
 
       console.log(transaction);
@@ -331,15 +334,15 @@ export class TransactionController {
     };
   }
 
-  // @IsPublic()
-  // @Post('notify')
-  // async processAxios(@Body() body: CreateTransactionBody) {
-  //   const { transaction } = await this.getTransactionById.execute({
-  //     transactionId,
-  //   });
+  @IsPublic()
+  @Post('notify')
+  async processNotification(@Body() body: CreateTransactionNotificationBody) {
+    const { IdTransaction, TransactionStatus } = body;
 
-  //   return {
-  //     transaction,
-  //   };
-  // }
+    const statusId = TransactionStatus.Id;
+
+    const idTransaction = IdTransaction.toString();
+
+    await this.updateStatusTransaction.execute({ idTransaction, statusId });
+  }
 }
