@@ -97,7 +97,7 @@ function formatPixData(data: TransactionRequest) {
     "Vendor": "Instituto Aro",
     "CallbackUrl": `${process.env.DATABASE_URL}/notify`,
     "PaymentMethod": data.paymentMethod,
-    "Reference": "TESTE",
+    "Reference": "Pagamento Pix",
     "Customer": {
       "Name": data.customerName,
       "Identity": data.customerIdentity,
