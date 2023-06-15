@@ -27,12 +27,33 @@ export class PrismaTransactionMapper {
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,
       createdAt: transaction.createdAt,
-      product: transaction.product,
+      product: transaction.products,
       description: transaction.description,
       tid: transaction.tid,
       authorizationCode: transaction.authorizationCode,
       pixKey: transaction.pixKey,
       idTransactionSafe2Pay: transaction.idTransactionSafe2Pay,
+    };
+  }
+
+  static toPrismaUpdate(transaction: Transaction) {
+    return {
+      id: transaction.id,
+      customerId: transaction.customer.id,
+      paymentMethod: transaction.paymentMethod,
+      status: Number(transaction.status),
+      message: transaction.message,
+      transactionToken: transaction.transactionToken,
+      installments: transaction.installments,
+      discount: transaction.discount,
+      canceledAt: transaction.canceledAt,
+      createdAt: transaction.createdAt,
+      description: transaction.description,
+      tid: transaction.tid,
+      authorizationCode: transaction.authorizationCode,
+      pixKey: transaction.pixKey,
+      idTransactionSafe2Pay: transaction.idTransactionSafe2Pay,
+      products: transaction.products,
     };
   }
 
@@ -49,37 +70,40 @@ export class PrismaTransactionMapper {
       products: (ProductsOnTransactions & { product: RawProduct })[];
     },
   ): Transaction {
-    return new Transaction({
-      customer: new Customer(
-        {
-          address: new Address({
-            city: raw.customer.addressCity,
-            complement: raw.customer.addressComplement,
-            district: raw.customer.addressDistrict,
-            number: raw.customer.addressNumber,
-            stateInitials: raw.customer.addressStateInitials,
-            street: raw.customer.addressStreet,
-            zipCode: raw.customer.addressZipCode,
-          }),
-          category: raw.customer.category,
-          email: raw.customer.email,
-          name: raw.customer.name,
-          phone: raw.customer.phone,
-        },
-        raw.customer.identity,
-      ),
-      hasError: false,
-      installments: raw.installments,
-      paymentMethod: raw.paymentMethod,
-      product: raw.products.map((item) => {
-        return new Product(
+    return new Transaction(
+      {
+        customer: new Customer(
           {
-            description: item.product.description,
-            price: item.product.price,
+            address: new Address({
+              city: raw.customer.addressCity,
+              complement: raw.customer.addressComplement,
+              district: raw.customer.addressDistrict,
+              number: raw.customer.addressNumber,
+              stateInitials: raw.customer.addressStateInitials,
+              street: raw.customer.addressStreet,
+              zipCode: raw.customer.addressZipCode,
+            }),
+            category: raw.customer.category,
+            email: raw.customer.email,
+            name: raw.customer.name,
+            phone: raw.customer.phone,
           },
-          item.product.id,
-        );
-      }),
-    });
+          raw.customer.identity,
+        ),
+        hasError: false,
+        installments: raw.installments,
+        paymentMethod: raw.paymentMethod,
+        products: raw.products.map((item) => {
+          return new Product(
+            {
+              description: item.product.description,
+              price: item.product.price,
+            },
+            item.product.id,
+          );
+        }),
+      },
+      raw.id,
+    );
   }
 }

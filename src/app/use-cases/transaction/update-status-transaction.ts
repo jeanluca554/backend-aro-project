@@ -32,6 +32,6 @@ export class UpdateStatusTransaction {
 
     if (statusId === 3) transaction.setStatusAuthorized();
 
-    await this.transactionsRepository.save(transaction);
+    await this.transactionsRepository.updateStatus(transaction);
   }
 }

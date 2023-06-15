@@ -7,5 +7,5 @@ export abstract class TransactionRepository {
   abstract findManyByProductId(productId: string): Promise<any>;
   abstract findById(transactionId: string): Promise<Transaction | null>;
   abstract findUniqueByTransactionId(transaction: string): Promise<TransactionToDomain | null>;
-  abstract save(transaction: Transaction): Promise<void>;
+  abstract updateStatus(transaction: Transaction): Promise<void>;
 }

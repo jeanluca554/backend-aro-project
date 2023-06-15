@@ -96,7 +96,7 @@ export class CreateUnsuccessfullyTransaction {
         },
         identity,
       ),
-      product: products.map((item) => {
+      products: products.map((item) => {
         return new Product(
           {
             description: item.description,
