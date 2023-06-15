@@ -167,6 +167,8 @@ export class PrismaTransactionRepository implements TransactionRepository {
       },
       data: {
         status: raw.status,
+        description: 'Pagamento pix aprovado!',
+        message: 'Pagamento Autorizado',
       },
     });
   }
