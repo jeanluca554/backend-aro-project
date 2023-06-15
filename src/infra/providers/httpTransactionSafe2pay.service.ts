@@ -95,7 +95,7 @@ function formatPixData(data: TransactionRequest) {
     "IsSandbox": false,
     "Application": "Pagamento Safe2Pay",
     "Vendor": "Instituto Aro",
-    "CallbackUrl": "https://callbacks.exemplo.com.br/api/Notify",
+    "CallbackUrl": `${process.env.DATABASE_URL}/notify`,
     "PaymentMethod": data.paymentMethod,
     "Reference": "TESTE",
     "Customer": {
