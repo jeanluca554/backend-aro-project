@@ -39,7 +39,7 @@ model Transaction {
   message               String?
   status                Int?
   transactionToken      String?
-  installments          Int?
+  installments          Int                      @default(1)
   discount              Decimal?
   description           String?
   tid                   String?
