@@ -23,8 +23,9 @@ interface CreateTransactionRequest {
   productPrice: number;
   paymentMethod: string;
   installments: number;
-  message: string | undefined;
-  status: number | undefined;
+  message: string | null;
+  description: string | null;
+  status: number | null;
   discount?: number;
   transactionToken?: string;
   hasError: boolean;
@@ -60,6 +61,7 @@ export class CreateUnsuccessfullyTransaction {
       installments,
       message,
       status,
+      description,
       discount,
       transactionToken,
       hasError,
@@ -114,6 +116,7 @@ export class CreateUnsuccessfullyTransaction {
       hasError,
       errorCode,
       errorMessage,
+      description,
     });
 
     await this.transactionRepository.createUnsuccessfullyTransaction(transaction);

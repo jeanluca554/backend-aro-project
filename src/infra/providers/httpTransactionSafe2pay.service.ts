@@ -26,11 +26,11 @@ interface TransactionRequest {
 }
 
 export interface TransactionResponse {
-  ResponseDetail?: {
+  ResponseDetail: {
     IdTransaction?: string;
-    Description?: string;
-    Message?: string;
-    Status?: number;
+    Description: string | null;
+    Message: string | null;
+    Status: number | null;
     Token?: string;
     Tid?: string;
     AuthorizationCode?: string;
@@ -184,6 +184,10 @@ export class HttpTransactionSafe2Pay {
       console.log(error);
     }
 
-    return { HasError: true, Error: 'Error httpTransactionSafe2pay' };
+    return {
+      HasError: true,
+      Error: 'Error httpTransactionSafe2pay',
+      ResponseDetail: { Description: null, Message: null, Status: null },
+    };
   }
 }

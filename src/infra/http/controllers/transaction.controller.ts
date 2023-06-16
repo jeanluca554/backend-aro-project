@@ -1,10 +1,11 @@
 import { CreateTransaction } from '@app/use-cases/transaction/create-transaction';
+import { GetTickets } from '@app/use-cases/transaction/get-tickets';
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
 import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
 import { GetTransaction } from '@app/use-cases/transaction/get-transaction-by-id';
 import { IsPublic } from '@infra/decorators/is-public.decorator';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateTransactionBody } from '../dtos/create-transaction';
 import { TransactionViewModel } from '../view-models/transaction-view-model';
 import { Safe2PayTransactionService } from '@infra/providers/safe2PayTransaction.service';
@@ -21,6 +22,7 @@ export class TransactionController {
     private createTransaction: CreateTransaction,
     private updateStatusTransaction: UpdateStatusTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
+    private getTickets: GetTickets,
     private getTransaction: GetTransactions,
     private getTransactionById: GetTransaction,
   ) {}
@@ -110,12 +112,13 @@ export class TransactionController {
         customerPhone,
         customerCategory,
         installments: creditCardInstallmentQuantity,
-        message: transactionSafe2pay.ResponseDetail?.Message,
+        message: transactionSafe2pay.ResponseDetail.Message,
         paymentMethod,
         productCode: courseCode,
         productDescription: courseDescription,
         productPrice: courseUnitPrice,
         status: transactionSafe2pay.ResponseDetail?.Status,
+        description: transactionSafe2pay.ResponseDetail.Description,
         transactionToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
         hasError: transactionSafe2pay.HasError,
@@ -261,6 +264,7 @@ export class TransactionController {
         productDescription: courseDescription,
         productPrice: courseUnitPrice,
         status: transactionSafe2pay.ResponseDetail?.Status,
+        description: transactionSafe2pay.ResponseDetail.Description,
         transactionToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
         hasError: transactionSafe2pay.HasError,
@@ -344,5 +348,17 @@ export class TransactionController {
     const idTransaction = IdTransaction.toString();
 
     await this.updateStatusTransaction.execute({ idTransaction, statusId });
+  }
+
+  @IsPublic()
+  @Get('tickets/:identity/:email')
+  async findTickets(@Param('identity') identity: string, @Param('email') email: string) {
+    const { transactions } = await this.getTickets.execute({ identity, email });
+
+    if (typeof transactions === 'string') {
+      throw new BadRequestException(transactions);
+    }
+
+    return transactions;
   }
 }

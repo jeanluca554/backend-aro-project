@@ -8,14 +8,14 @@ export interface TransactionProps {
   products: Product[];
   paymentMethod: string;
   installments: number;
-  message?: string;
-  status?: number;
+  message: string | null;
+  status: number | null;
   discount?: number | null;
   transactionToken?: string;
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
-  description?: string;
+  description: string | null;
   tid?: string;
   pixQrCode?: string;
   pixKey?: string;
@@ -56,11 +56,11 @@ export class Transaction extends BaseEntity {
     return this.props.paymentMethod;
   }
 
-  public set message(message: string | undefined) {
+  public set message(message: string | null) {
     this.props.message = message;
   }
 
-  public get message(): string | undefined {
+  public get message(): string | null {
     return this.props.message;
   }
 
@@ -80,11 +80,11 @@ export class Transaction extends BaseEntity {
     return this.props.installments;
   }
 
-  public set status(status: number | undefined) {
+  public set status(status: number | null) {
     this.props.status = status;
   }
 
-  public get status(): number | undefined {
+  public get status(): number | null {
     return this.props.status;
   }
 
@@ -112,11 +112,11 @@ export class Transaction extends BaseEntity {
     return this.props.errorMessage;
   }
 
-  public set description(description: string | undefined) {
+  public set description(description: string | null) {
     this.props.description = description;
   }
 
-  public get description(): string | undefined {
+  public get description(): string | null {
     return this.props.description;
   }
 

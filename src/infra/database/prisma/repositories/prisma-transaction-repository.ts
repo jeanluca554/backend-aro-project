@@ -7,6 +7,7 @@ import {
   TransactionToDomain,
 } from '../mappers/prisma-transaction-mapper';
 import { PrismaUnsuccessfullyTransactionMapper } from '../mappers/prisma-unsuccessfully-transaction-mapper';
+import { MessageError } from '@app/use-cases/errors/message-error';
 
 @Injectable()
 export class PrismaTransactionRepository implements TransactionRepository {
@@ -151,15 +152,11 @@ export class PrismaTransactionRepository implements TransactionRepository {
       return null;
     }
 
-    console.log('Transaction no método FindFirst', transaction);
-
     return PrismaTransactionMapper.transactionToDomain(transaction);
   }
 
   async updateStatus(transaction: Transaction): Promise<void> {
     const raw = PrismaTransactionMapper.toPrisma(transaction);
-
-    console.log('o Raw é: ', raw);
 
     await this.prismaService.transaction.update({
       where: {
@@ -171,5 +168,55 @@ export class PrismaTransactionRepository implements TransactionRepository {
         message: 'Pagamento Autorizado',
       },
     });
+  }
+
+  async findTickets(identity: string, email: string): Promise<Transaction[] | null | string> {
+    // const transactions = await this.prismaService.transaction.findMany({
+    //   where: {
+    //     customerId: identity,
+    //     AND: {
+    //       customer: {
+    //         email: email,
+    //       },
+    //     },
+    //   },
+    //   include: {
+    //     customer: true,
+    //     products: {
+    //       include: {
+    //         product: true,
+    //       },
+    //     },
+    //   },
+    // });
+
+    const user = await this.prismaService.customer.findUnique({
+      where: {
+        identity: identity,
+      },
+    });
+
+    if (!user || user?.email !== email) {
+      return 'Não foram encontrados dados com as informações inseridas.';
+    }
+
+    const transactions = await this.prismaService.transaction.findMany({
+      where: {
+        customerId: identity,
+      },
+      include: {
+        customer: true,
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+
+    console.log('User found: ', user);
+    // console.log('In find Tickets: ', transactions);
+
+    return PrismaTransactionMapper.transactionsToDomain(transactions);
   }
 }

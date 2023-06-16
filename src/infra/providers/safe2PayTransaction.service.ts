@@ -29,11 +29,11 @@ interface TransactionRequest {
 
 // export interface TransactionResponse extends Error {
 export interface TransactionResponse {
-  ResponseDetail?: {
+  ResponseDetail: {
     IdTransaction?: string;
-    Description?: string;
-    Message?: string;
-    Status?: number;
+    Description: string | null;
+    Message: string | null;
+    Status: number | null;
     Token?: string;
     Tid?: string;
     AuthorizationCode?: string;
@@ -146,6 +146,11 @@ export class Safe2PayTransactionService {
       HasError: false,
       Error: '',
       ErrorCode: '',
+      ResponseDetail: {
+        Description: null,
+        Message: null,
+        Status: null,
+      },
     };
 
     await PaymentRequest.Payment(payload).then(

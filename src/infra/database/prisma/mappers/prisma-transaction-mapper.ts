@@ -93,6 +93,9 @@ export class PrismaTransactionMapper {
         hasError: false,
         installments: raw.installments,
         paymentMethod: raw.paymentMethod,
+        description: raw.description,
+        message: raw.message,
+        status: raw.status,
         products: raw.products.map((item) => {
           return new Product(
             {
@@ -105,5 +108,53 @@ export class PrismaTransactionMapper {
       },
       raw.id,
     );
+  }
+
+  static transactionsToDomain(
+    raw: (RawTransaction & {
+      customer: RawCustomer;
+      products: (ProductsOnTransactions & { product: RawProduct })[];
+    })[],
+  ): Transaction[] {
+    return raw.map((raw) => {
+      return new Transaction(
+        {
+          customer: new Customer(
+            {
+              address: new Address({
+                city: raw.customer.addressCity,
+                complement: raw.customer.addressComplement,
+                district: raw.customer.addressDistrict,
+                number: raw.customer.addressNumber,
+                stateInitials: raw.customer.addressStateInitials,
+                street: raw.customer.addressStreet,
+                zipCode: raw.customer.addressZipCode,
+              }),
+              category: raw.customer.category,
+              email: raw.customer.email,
+              name: raw.customer.name,
+              phone: raw.customer.phone,
+            },
+            raw.customer.identity,
+          ),
+          hasError: false,
+          installments: raw.installments,
+          paymentMethod: raw.paymentMethod,
+          message: raw.message,
+          status: raw.status,
+          description: raw.description,
+          products: raw.products.map((item) => {
+            return new Product(
+              {
+                description: item.product.description,
+                price: item.product.price,
+              },
+              item.product.id,
+            );
+          }),
+        },
+        raw.id,
+      );
+    });
   }
 }

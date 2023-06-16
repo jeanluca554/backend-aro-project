@@ -23,12 +23,12 @@ interface CreateTransactionRequest {
   productPrice: number;
   paymentMethod: string;
   installments: number;
-  message: string | undefined;
-  status: number | undefined;
+  message: string | null;
+  status: number | null;
   discount?: number;
   transactionToken?: string;
   hasError: boolean;
-  description?: string;
+  description: string | null;
   tid?: string;
   authorizationCode?: string;
   pixQrCode?: string;
