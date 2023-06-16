@@ -27,7 +27,7 @@ interface TransactionRequest {
 
 export interface TransactionResponse {
   ResponseDetail: {
-    IdTransaction?: string;
+    IdTransaction: string | null;
     Description: string | null;
     Message: string | null;
     Status: number | null;
@@ -187,7 +187,7 @@ export class HttpTransactionSafe2Pay {
     return {
       HasError: true,
       Error: 'Error httpTransactionSafe2pay',
-      ResponseDetail: { Description: null, Message: null, Status: null },
+      ResponseDetail: { Description: null, Message: null, Status: null, IdTransaction: null },
     };
   }
 }

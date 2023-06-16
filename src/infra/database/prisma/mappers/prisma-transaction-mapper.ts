@@ -96,6 +96,7 @@ export class PrismaTransactionMapper {
         description: raw.description,
         message: raw.message,
         status: raw.status,
+        idTransactionSafe2Pay: raw.idTransactionSafe2Pay,
         products: raw.products.map((item) => {
           return new Product(
             {
@@ -143,6 +144,7 @@ export class PrismaTransactionMapper {
           message: raw.message,
           status: raw.status,
           description: raw.description,
+          idTransactionSafe2Pay: raw.idTransactionSafe2Pay,
           products: raw.products.map((item) => {
             return new Product(
               {

@@ -33,7 +33,7 @@ interface CreateTransactionRequest {
   authorizationCode?: string;
   pixQrCode?: string;
   pixKey?: string;
-  idTransactionSafe2Pay?: string;
+  idTransactionSafe2Pay: string | null;
 }
 
 interface CreateTransactionResponse {

@@ -30,7 +30,7 @@ interface TransactionRequest {
 // export interface TransactionResponse extends Error {
 export interface TransactionResponse {
   ResponseDetail: {
-    IdTransaction?: string;
+    IdTransaction: string | null;
     Description: string | null;
     Message: string | null;
     Status: number | null;
@@ -150,6 +150,7 @@ export class Safe2PayTransactionService {
         Description: null,
         Message: null,
         Status: null,
+        IdTransaction: null,
       },
     };
 

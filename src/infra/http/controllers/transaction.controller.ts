@@ -121,6 +121,7 @@ export class TransactionController {
         description: transactionSafe2pay.ResponseDetail.Description,
         transactionToken: transactionSafe2pay.ResponseDetail?.Token,
         discount,
+        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail.IdTransaction,
         hasError: transactionSafe2pay.HasError,
         errorCode: transactionSafe2pay.ErrorCode,
         errorMessage: transactionSafe2pay.Error,
@@ -151,6 +152,7 @@ export class TransactionController {
         productPrice: courseUnitPrice,
         status: transactionSafe2pay.ResponseDetail?.Status,
         transactionToken: transactionSafe2pay.ResponseDetail?.Token,
+        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail.IdTransaction,
         discount,
         hasError: transactionSafe2pay.HasError,
         authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
@@ -266,6 +268,7 @@ export class TransactionController {
         status: transactionSafe2pay.ResponseDetail?.Status,
         description: transactionSafe2pay.ResponseDetail.Description,
         transactionToken: transactionSafe2pay.ResponseDetail?.Token,
+        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail.IdTransaction,
         discount,
         hasError: transactionSafe2pay.HasError,
         errorCode: transactionSafe2pay.ErrorCode,
@@ -276,6 +279,12 @@ export class TransactionController {
         transactionResult: TransactionViewModel.toHTTPError(transaction),
       };
     } else {
+      // ensure IdTransaction will be a string
+      const transactionId =
+        transactionSafe2pay.ResponseDetail?.IdTransaction !== null
+          ? transactionSafe2pay.ResponseDetail?.IdTransaction.toString()
+          : null;
+
       const { transaction } = await this.createTransaction.execute({
         addressCity,
         addressComplement,
@@ -304,7 +313,8 @@ export class TransactionController {
         tid: transactionSafe2pay.ResponseDetail?.Tid,
         pixQrCode: transactionSafe2pay.ResponseDetail?.QrCode,
         pixKey: transactionSafe2pay.ResponseDetail?.Key,
-        idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail?.IdTransaction?.toString(),
+        idTransactionSafe2Pay: transactionId,
+        // idTransactionSafe2Pay: transactionSafe2pay.ResponseDetail?.IdTransaction?.toString(),
       });
 
       console.log(transaction);

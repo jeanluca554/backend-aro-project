@@ -26,6 +26,7 @@ interface CreateTransactionRequest {
   message: string | null;
   description: string | null;
   status: number | null;
+  idTransactionSafe2Pay: string | null;
   discount?: number;
   transactionToken?: string;
   hasError: boolean;
@@ -67,6 +68,7 @@ export class CreateUnsuccessfullyTransaction {
       hasError,
       errorCode,
       errorMessage,
+      idTransactionSafe2Pay,
     } = request;
 
     const identity = customerIdentity;
@@ -117,6 +119,7 @@ export class CreateUnsuccessfullyTransaction {
       errorCode,
       errorMessage,
       description,
+      idTransactionSafe2Pay,
     });
 
     await this.transactionRepository.createUnsuccessfullyTransaction(transaction);
