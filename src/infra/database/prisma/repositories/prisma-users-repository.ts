@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { User } from '@app/entities/user/user';
 import { UsersRepository } from '@app/repositories/user-repository';
 import { PrismaService } from '../prisma.service';
