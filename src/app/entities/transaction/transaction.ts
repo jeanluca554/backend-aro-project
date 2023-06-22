@@ -1,7 +1,7 @@
 import { Replace } from 'src/helpers/Replace';
 import { BaseEntity } from '../base-entity';
-import { Customer } from './customer';
-import { Product } from './product';
+import { Customer } from '../customer/customer';
+import { Product } from '../product/product';
 
 export interface TransactionProps {
   customer: Customer;

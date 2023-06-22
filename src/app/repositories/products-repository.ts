@@ -1,4 +1,4 @@
-import { Product } from '../entities/transaction/product';
+import { Product } from '../entities/product/product';
 
 export abstract class ProductsRepository {
   abstract create(product: Product): Promise<void>;

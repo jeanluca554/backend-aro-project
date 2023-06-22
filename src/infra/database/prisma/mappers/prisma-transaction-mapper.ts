@@ -5,9 +5,9 @@ import {
   ProductsOnTransactions,
 } from '@prisma/client';
 import { Transaction } from '@app/entities/transaction/transaction';
-import { Customer } from '@app/entities/transaction/customer';
-import { Address } from '@app/entities/transaction/address';
-import { Product } from '@app/entities/transaction/product';
+import { Customer } from '@app/entities/customer/customer';
+import { Address } from '@app/entities/customer/address';
+import { Product } from '@app/entities/product/product';
 
 export type TransactionToDomain = {
   customerId: string;

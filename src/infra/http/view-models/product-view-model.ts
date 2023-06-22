@@ -1,4 +1,4 @@
-import { Product } from '@app/entities/transaction/product';
+import { Product } from '@app/entities/product/product';
 
 export class ProductViewModel {
   static toHTTP(product: Product) {

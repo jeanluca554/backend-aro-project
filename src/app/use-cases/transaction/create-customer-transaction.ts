@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Address } from '@app/entities/transaction/address';
-import { Customer } from '@app/entities/transaction/customer';
+import { Address } from '@app/entities/customer/address';
+import { Customer } from '@app/entities/customer/customer';
 import { CustomerRepository } from '../../repositories/customer-repository';
 
 interface CreateCustomerRequest {

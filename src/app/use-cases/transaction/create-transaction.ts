@@ -1,6 +1,6 @@
-import { Address } from '@app/entities/transaction/address';
-import { Customer } from '@app/entities/transaction/customer';
-import { Product } from '@app/entities/transaction/product';
+import { Address } from '@app/entities/customer/address';
+import { Customer } from '@app/entities/customer/customer';
+import { Product } from '@app/entities/product/product';
 import { Injectable } from '@nestjs/common';
 import { Transaction } from '../../entities/transaction/transaction';
 import { TransactionRepository } from '../../repositories/transaction-repository';

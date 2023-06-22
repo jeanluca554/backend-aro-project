@@ -1,5 +1,5 @@
 // import { Notification as RawNotification } from '@prisma/client';
-import { Customer } from '@app/entities/transaction/customer';
+import { Customer } from '@app/entities/customer/customer';
 
 export class PrismaCustomerMapper {
   static toPrisma(customer: Customer) {
