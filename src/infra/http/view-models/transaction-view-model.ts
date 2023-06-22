@@ -39,4 +39,20 @@ export class TransactionViewModel {
       errorMessage: transaction.errorMessage,
     };
   }
+
+  static toHTTPTicket(transactions: Transaction[]) {
+    return transactions.map((transaction) => {
+      return transaction.products.map((product) => {
+        return {
+          product: product.description,
+          userName: transaction.customer.name,
+          userCategory: transaction.customer.category,
+          paymentMethod: transaction.paymentMethod,
+          message: transaction.message,
+          status: transaction.status,
+          description: transaction.description,
+        };
+      });
+    });
+  }
 }

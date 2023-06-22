@@ -369,6 +369,6 @@ export class TransactionController {
       throw new BadRequestException(transactions);
     }
 
-    return transactions;
+    return TransactionViewModel.toHTTPTicket(transactions);
   }
 }
