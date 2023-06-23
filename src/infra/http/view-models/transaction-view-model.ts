@@ -41,19 +41,43 @@ export class TransactionViewModel {
   }
 
   static toHTTPTicket(transactions: Transaction[]) {
-    return transactions.map((transaction) => {
-      return transaction.tickets.map((ticket) => {
-        return {
-          // product: product.description,
-          ticket: ticket.id,
-          userName: transaction.customer.name,
-          userCategory: transaction.customer.category,
-          paymentMethod: transaction.paymentMethod,
-          message: transaction.message,
-          status: transaction.status,
-          description: transaction.description,
-        };
+    return transactions.flatMap((transaction) => {
+      return transaction.tickets.flatMap((ticket) => {
+        return transaction.products.flatMap((product) => {
+          if (ticket.productId === product.id) {
+            return {
+              product: product.description,
+              ticket: ticket.id,
+              userName: transaction.customer.name,
+              userCategory: transaction.customer.category,
+              paymentMethod: transaction.paymentMethod,
+              message: transaction.message,
+              status: transaction.status,
+              description: transaction.description,
+            };
+          }
+        });
       });
     });
+
+    // return transactions.flatMap((transaction) =>
+    //   transaction.tickets.flatMap((ticket) => {
+    //     const product = transaction.products.find(
+    //       (product) => ticket.productId === product.id,
+    //     );
+    //     if (product) {
+    //       return {
+    //         product: product.description,
+    //         ticket: ticket.id,
+    //         userName: transaction.customer.name,
+    //         userCategory: transaction.customer.category,
+    //         paymentMethod: transaction.paymentMethod,
+    //         message: transaction.message,
+    //         status: transaction.status,
+    //         description: transaction.description,
+    //       };
+    //     }
+    //   }),
+    // );
   }
 }
