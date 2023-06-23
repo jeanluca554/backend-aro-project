@@ -2,10 +2,12 @@ import { Replace } from 'src/helpers/Replace';
 import { BaseEntity } from '../base-entity';
 import { Customer } from '../customer/customer';
 import { Product } from '../product/product';
+import { Ticket } from '../ticket/ticket';
 
 export interface TransactionProps {
   customer: Customer;
   products: Product[];
+  tickets: Ticket[];
   paymentMethod: string;
   installments: number;
   message: string | null;
@@ -182,6 +184,14 @@ export class Transaction extends BaseEntity {
 
   public set products(product: Product[]) {
     this.props.products = product;
+  }
+
+  public get tickets(): Ticket[] {
+    return this.props.tickets;
+  }
+
+  public set tickets(ticket: Ticket[]) {
+    this.props.tickets = ticket;
   }
 
   public setStatusAuthorized() {

@@ -4,6 +4,7 @@ import { Product } from '@app/entities/product/product';
 import { Injectable } from '@nestjs/common';
 import { Transaction } from '../../entities/transaction/transaction';
 import { TransactionRepository } from '../../repositories/transaction-repository';
+import { Ticket } from '@app/entities/ticket/ticket';
 
 interface CreateTransactionRequest {
   addressCity: string;
@@ -108,6 +109,11 @@ export class CreateUnsuccessfullyTransaction {
           },
           item.productCode,
         );
+      }),
+      tickets: products.map((product) => {
+        return new Ticket({
+          productId: product.productCode,
+        });
       }),
       discount,
       transactionToken,

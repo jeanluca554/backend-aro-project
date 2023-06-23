@@ -2,6 +2,7 @@ import { Replace } from 'src/helpers/Replace';
 import { BaseEntity } from '../base-entity';
 
 export interface TicketProps {
+  productId: string;
   createdAt: Date;
 }
 
@@ -18,5 +19,13 @@ export class Ticket extends BaseEntity {
 
   public get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  public set productId(productId: string) {
+    this.props.productId = productId;
+  }
+
+  public get productId(): string {
+    return this.props.productId;
   }
 }

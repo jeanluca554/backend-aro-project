@@ -31,6 +31,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
       idTransactionSafe2Pay,
       tid,
       product,
+      tickets,
     } = PrismaTransactionMapper.toPrisma(transaction);
 
     await this.prismaService.transaction.create({
@@ -59,8 +60,35 @@ export class PrismaTransactionRepository implements TransactionRepository {
             }),
           },
         },
+        tickets: {
+          createMany: {
+            data: tickets.map((ticket) => {
+              return {
+                id: ticket.id,
+                productId: ticket.productId,
+                // transactionId: id,
+              };
+            }),
+          },
+        },
       },
     });
+
+    // const prismaTickets = product.map((productItem) => {
+    //   return this.prismaService.ticket.create({
+    //     data
+    //   })
+    // })
+
+    // await this.prismaService.ticket.createMany({
+    //   data: product.map((item) => {
+    //     return {
+    //       id,
+    //       productId: item.id,
+    //       transactionId: id,
+    //     };
+    //   }),
+    // });
   }
 
   async createUnsuccessfullyTransaction(transaction: Transaction): Promise<void> {
@@ -145,6 +173,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
             product: true,
           },
         },
+        tickets: true,
       },
     });
 
@@ -211,8 +240,23 @@ export class PrismaTransactionRepository implements TransactionRepository {
             product: true,
           },
         },
+        tickets: true,
       },
     });
+    // const tickets = await this.prismaService.ticket.findMany({
+    //   where: {
+    //     customerId: identity,
+    //   },
+    //   include: {
+    //     customer: true,
+    //     products: {
+    //       include: {
+    //         product: true,
+    //       },
+    //     },
+    //     tickets: true,
+    //   },
+    // });
 
     console.log('User found: ', user);
     // console.log('In find Tickets: ', transactions);

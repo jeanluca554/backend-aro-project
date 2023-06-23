@@ -3,11 +3,13 @@ import {
   Customer as RawCustomer,
   Product as RawProduct,
   ProductsOnTransactions,
+  Ticket as RawTicket,
 } from '@prisma/client';
 import { Transaction } from '@app/entities/transaction/transaction';
 import { Customer } from '@app/entities/customer/customer';
 import { Address } from '@app/entities/customer/address';
 import { Product } from '@app/entities/product/product';
+import { Ticket } from '@app/entities/ticket/ticket';
 
 export type TransactionToDomain = {
   customerId: string;
@@ -33,6 +35,7 @@ export class PrismaTransactionMapper {
       authorizationCode: transaction.authorizationCode,
       pixKey: transaction.pixKey,
       idTransactionSafe2Pay: transaction.idTransactionSafe2Pay,
+      tickets: transaction.tickets,
     };
   }
 
@@ -68,6 +71,7 @@ export class PrismaTransactionMapper {
     raw: RawTransaction & {
       customer: RawCustomer;
       products: (ProductsOnTransactions & { product: RawProduct })[];
+      tickets: RawTicket[];
     },
   ): Transaction {
     return new Transaction(
@@ -106,6 +110,12 @@ export class PrismaTransactionMapper {
             item.product.id,
           );
         }),
+        tickets: raw.tickets.map((item) => {
+          return new Ticket({
+            productId: item.productId,
+            createdAt: item.createdAt,
+          });
+        }),
       },
       raw.id,
     );
@@ -115,6 +125,7 @@ export class PrismaTransactionMapper {
     raw: (RawTransaction & {
       customer: RawCustomer;
       products: (ProductsOnTransactions & { product: RawProduct })[];
+      tickets: RawTicket[];
     })[],
   ): Transaction[] {
     return raw.map((raw) => {
@@ -153,6 +164,12 @@ export class PrismaTransactionMapper {
               },
               item.product.id,
             );
+          }),
+          tickets: raw.tickets.map((item) => {
+            return new Ticket({
+              productId: item.productId,
+              createdAt: item.createdAt,
+            });
           }),
         },
         raw.id,

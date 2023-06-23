@@ -42,9 +42,10 @@ export class TransactionViewModel {
 
   static toHTTPTicket(transactions: Transaction[]) {
     return transactions.map((transaction) => {
-      return transaction.products.map((product) => {
+      return transaction.tickets.map((ticket) => {
         return {
-          product: product.description,
+          // product: product.description,
+          ticket: ticket.id,
           userName: transaction.customer.name,
           userCategory: transaction.customer.category,
           paymentMethod: transaction.paymentMethod,
