@@ -66,36 +66,18 @@ export class PrismaTransactionRepository implements TransactionRepository {
               return {
                 id: ticket.id,
                 productId: ticket.productId,
-                // transactionId: id,
               };
             }),
           },
         },
       },
     });
-
-    // const prismaTickets = product.map((productItem) => {
-    //   return this.prismaService.ticket.create({
-    //     data
-    //   })
-    // })
-
-    // await this.prismaService.ticket.createMany({
-    //   data: product.map((item) => {
-    //     return {
-    //       id,
-    //       productId: item.id,
-    //       transactionId: id,
-    //     };
-    //   }),
-    // });
   }
 
   async createUnsuccessfullyTransaction(transaction: Transaction): Promise<void> {
     const { createdAt, customerId, errorCode, id, message, paymentMethod } =
       PrismaUnsuccessfullyTransactionMapper.toPrisma(transaction);
 
-    // await this.prismaService.transaction.create({
     await this.prismaService.transactionUnsuccessfully.create({
       data: {
         id,
@@ -140,8 +122,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
       },
     });
 
-    console.log(transactions);
-    // return transactions;
+    // console.log(transactions);
     return transactions.map((transaction) => {
       // return PrismaTransactionMapper.toDomain(transaction);
       return transaction;
@@ -200,25 +181,6 @@ export class PrismaTransactionRepository implements TransactionRepository {
   }
 
   async findTickets(identity: string, email: string): Promise<Transaction[] | null | string> {
-    // const transactions = await this.prismaService.transaction.findMany({
-    //   where: {
-    //     customerId: identity,
-    //     AND: {
-    //       customer: {
-    //         email: email,
-    //       },
-    //     },
-    //   },
-    //   include: {
-    //     customer: true,
-    //     products: {
-    //       include: {
-    //         product: true,
-    //       },
-    //     },
-    //   },
-    // });
-
     const user = await this.prismaService.customer.findUnique({
       where: {
         identity: identity,
@@ -243,22 +205,7 @@ export class PrismaTransactionRepository implements TransactionRepository {
         tickets: true,
       },
     });
-    // const tickets = await this.prismaService.ticket.findMany({
-    //   where: {
-    //     customerId: identity,
-    //   },
-    //   include: {
-    //     customer: true,
-    //     products: {
-    //       include: {
-    //         product: true,
-    //       },
-    //     },
-    //     tickets: true,
-    //   },
-    // });
 
-    console.log('User found: ', user);
     // console.log('In find Tickets: ', transactions);
 
     return PrismaTransactionMapper.transactionsToDomain(transactions);
