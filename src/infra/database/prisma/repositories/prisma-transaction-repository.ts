@@ -4,6 +4,7 @@ import { TransactionRepository } from '@app/repositories/transaction-repository'
 import { PrismaService } from '../prisma.service';
 import {
   PrismaTransactionMapper,
+  TicketToDomain,
   TransactionToDomain,
 } from '../mappers/prisma-transaction-mapper';
 import { PrismaUnsuccessfullyTransactionMapper } from '../mappers/prisma-unsuccessfully-transaction-mapper';
@@ -209,5 +210,22 @@ export class PrismaTransactionRepository implements TransactionRepository {
     // console.log('In find Tickets: ', transactions);
 
     return PrismaTransactionMapper.transactionsToDomain(transactions);
+  }
+
+  async findUniqueTicket(idTicket: string): Promise<TicketToDomain | null | string> {
+    const ticket = await this.prismaService.ticket.findUnique({
+      where: {
+        id: idTicket,
+      },
+      include: {
+        transaction: true,
+      },
+    });
+
+    if (!ticket || ticket.transaction.status !== 3) {
+      return 'Não foram encontrados dados com as informações inseridas.';
+    }
+
+    return PrismaTransactionMapper.ticketToDomain(ticket);
   }
 }

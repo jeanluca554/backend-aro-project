@@ -1,5 +1,6 @@
 import { CreateTransaction } from '@app/use-cases/transaction/create-transaction';
 import { GetTickets } from '@app/use-cases/transaction/get-tickets';
+import { GetTicket } from '@app/use-cases/transaction/get-ticket';
 import { CreateUnsuccessfullyTransaction } from '@app/use-cases/transaction/create-unsuccessfully-transaction';
 import { CreateCustomerTransaction } from '@app/use-cases/transaction/create-customer-transaction';
 import { GetTransactions } from '@app/use-cases/transaction/get-transactions';
@@ -23,6 +24,7 @@ export class TransactionController {
     private updateStatusTransaction: UpdateStatusTransaction,
     private createUnsuccessfullyTransaction: CreateUnsuccessfullyTransaction,
     private getTickets: GetTickets,
+    private getTicket: GetTicket,
     private getTransaction: GetTransactions,
     private getTransactionById: GetTransaction,
   ) {}
@@ -338,7 +340,7 @@ export class TransactionController {
 
   @IsPublic()
   @Get('from/:transactionId')
-  async getFromRecipient(@Param('transactionId') transactionId: string) {
+  async getFromTransactionId(@Param('transactionId') transactionId: string) {
     const { transaction } = await this.getTransactionById.execute({
       transactionId,
     });
@@ -370,5 +372,21 @@ export class TransactionController {
     }
 
     return TransactionViewModel.toHTTPTicket(transactions);
+  }
+
+  @IsPublic()
+  @Get('ticket/from/:ticketId')
+  async getFromTicketId(@Param('ticketId') ticketId: string) {
+    const ticket = await this.getTicket.execute({
+      ticketId,
+    });
+
+    if (typeof ticket === 'string') {
+      throw new BadRequestException(ticket);
+    }
+
+    return {
+      ticket,
+    };
   }
 }

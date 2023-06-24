@@ -1,4 +1,7 @@
-import { TransactionToDomain } from '@infra/database/prisma/mappers/prisma-transaction-mapper';
+import {
+  TransactionToDomain,
+  TicketToDomain,
+} from '@infra/database/prisma/mappers/prisma-transaction-mapper';
 import { Transaction } from '../entities/transaction/transaction';
 
 export abstract class TransactionRepository {
@@ -11,5 +14,6 @@ export abstract class TransactionRepository {
     email: string,
   ): Promise<Transaction[] | null | string>;
   abstract findUniqueByTransactionId(transaction: string): Promise<TransactionToDomain | null>;
+  abstract findUniqueTicket(idTicket: string): Promise<TicketToDomain | null | string>;
   abstract updateStatus(transaction: Transaction): Promise<void>;
 }

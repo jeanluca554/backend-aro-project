@@ -16,6 +16,11 @@ export type TransactionToDomain = {
   idTransaction: string;
 };
 
+export type TicketToDomain = {
+  ticketId: string;
+  // customerId: string;
+};
+
 export class PrismaTransactionMapper {
   static toPrisma(transaction: Transaction) {
     return {
@@ -64,6 +69,13 @@ export class PrismaTransactionMapper {
     return {
       idTransaction: raw.id,
       customerId: raw.customerId,
+    };
+  }
+
+  static ticketToDomain(raw: RawTicket): TicketToDomain {
+    return {
+      ticketId: raw.id,
+      // customerId: raw.customerId,
     };
   }
 
