@@ -178,10 +178,13 @@ export class PrismaTransactionMapper {
             );
           }),
           tickets: raw.tickets.map((item) => {
-            return new Ticket({
-              productId: item.productId,
-              createdAt: item.createdAt,
-            });
+            return new Ticket(
+              {
+                productId: item.productId,
+                createdAt: item.createdAt,
+              },
+              item.id,
+            );
           }),
         },
         raw.id,
