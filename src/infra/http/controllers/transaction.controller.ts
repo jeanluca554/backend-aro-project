@@ -127,6 +127,7 @@ export class TransactionController {
         hasError: transactionSafe2pay.HasError,
         errorCode: transactionSafe2pay.ErrorCode,
         errorMessage: transactionSafe2pay.Error,
+        pixKey: transactionSafe2pay.ResponseDetail.pixKey,
       });
       console.log(transaction);
       return {
@@ -160,6 +161,7 @@ export class TransactionController {
         authorizationCode: transactionSafe2pay.ResponseDetail?.AuthorizationCode,
         description: transactionSafe2pay.ResponseDetail?.Description,
         tid: transactionSafe2pay.ResponseDetail?.Tid,
+        pixKey: transactionSafe2pay.ResponseDetail.pixKey,
       });
 
       console.log(transaction);
@@ -275,6 +277,7 @@ export class TransactionController {
         hasError: transactionSafe2pay.HasError,
         errorCode: transactionSafe2pay.ErrorCode,
         errorMessage: transactionSafe2pay.Error,
+        pixKey: transactionSafe2pay.ResponseDetail.Key,
       });
       console.log(transaction);
       return {

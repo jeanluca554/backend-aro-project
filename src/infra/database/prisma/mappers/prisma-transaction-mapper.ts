@@ -23,6 +23,8 @@ export type TicketToDomain = {
 
 export class PrismaTransactionMapper {
   static toPrisma(transaction: Transaction) {
+    const prismaInstallments =
+      transaction.installments === null ? undefined : transaction.installments;
     return {
       id: transaction.id,
       customerId: transaction.customer.id,
@@ -30,7 +32,7 @@ export class PrismaTransactionMapper {
       status: Number(transaction.status),
       message: transaction.message,
       transactionToken: transaction.transactionToken,
-      installments: transaction.installments,
+      installments: prismaInstallments,
       discount: transaction.discount,
       canceledAt: transaction.canceledAt,
       createdAt: transaction.createdAt,
@@ -113,6 +115,7 @@ export class PrismaTransactionMapper {
         message: raw.message,
         status: raw.status,
         idTransactionSafe2Pay: raw.idTransactionSafe2Pay,
+        pixKey: raw.pixKey,
         products: raw.products.map((item) => {
           return new Product(
             {
@@ -168,6 +171,7 @@ export class PrismaTransactionMapper {
           status: raw.status,
           description: raw.description,
           idTransactionSafe2Pay: raw.idTransactionSafe2Pay,
+          pixKey: raw.pixKey,
           products: raw.products.map((item) => {
             return new Product(
               {

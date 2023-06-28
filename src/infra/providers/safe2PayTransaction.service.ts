@@ -37,6 +37,7 @@ export interface TransactionResponse {
     Token?: string;
     Tid?: string;
     AuthorizationCode?: string;
+    pixKey: string | null;
   };
   HasError: boolean;
   ErrorCode: string;
@@ -151,6 +152,7 @@ export class Safe2PayTransactionService {
         Message: null,
         Status: null,
         IdTransaction: null,
+        pixKey: null,
       },
     };
 

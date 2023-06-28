@@ -35,7 +35,7 @@ export interface TransactionResponse {
     Tid?: string;
     AuthorizationCode?: string;
     QrCode?: string;
-    Key?: string;
+    Key: string | null;
   };
   HasError: boolean;
   ErrorCode?: string;
@@ -187,7 +187,13 @@ export class HttpTransactionSafe2Pay {
     return {
       HasError: true,
       Error: 'Error httpTransactionSafe2pay',
-      ResponseDetail: { Description: null, Message: null, Status: null, IdTransaction: null },
+      ResponseDetail: {
+        Description: null,
+        Message: null,
+        Status: null,
+        IdTransaction: null,
+        Key: null,
+      },
     };
   }
 }

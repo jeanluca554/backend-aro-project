@@ -54,6 +54,7 @@ export class TransactionViewModel {
               message: transaction.message,
               status: transaction.status,
               description: transaction.description,
+              pixKey: transaction.pixKey,
             };
           }
         });

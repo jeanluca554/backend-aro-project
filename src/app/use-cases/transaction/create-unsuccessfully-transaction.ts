@@ -33,6 +33,7 @@ interface CreateTransactionRequest {
   hasError: boolean;
   errorCode?: string;
   errorMessage?: string;
+  pixKey: string | null;
 }
 interface CreateTransactionResponse {
   transaction: Transaction;
@@ -70,6 +71,7 @@ export class CreateUnsuccessfullyTransaction {
       errorCode,
       errorMessage,
       idTransactionSafe2Pay,
+      pixKey,
     } = request;
 
     const identity = customerIdentity;
@@ -126,6 +128,7 @@ export class CreateUnsuccessfullyTransaction {
       errorMessage,
       description,
       idTransactionSafe2Pay,
+      pixKey,
     });
 
     await this.transactionRepository.createUnsuccessfullyTransaction(transaction);

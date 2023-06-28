@@ -20,7 +20,7 @@ export interface TransactionProps {
   description: string | null;
   tid?: string;
   pixQrCode?: string;
-  pixKey?: string;
+  pixKey: string | null;
   idTransactionSafe2Pay: string | null;
   authorizationCode?: string;
   canceledAt?: Date | null;
@@ -138,11 +138,11 @@ export class Transaction extends BaseEntity {
     return this.props.pixQrCode;
   }
 
-  public set pixKey(pixKey: string | undefined) {
+  public set pixKey(pixKey: string | null) {
     this.props.pixKey = pixKey;
   }
 
-  public get pixKey(): string | undefined {
+  public get pixKey(): string | null {
     return this.props.pixKey;
   }
 

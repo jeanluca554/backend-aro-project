@@ -97,7 +97,7 @@ export class CreateTransactionBody {
   paymentMethod: string;
 
   @IsNumber()
-  @IsPositive()
+  @Min(0)
   @IsOptional()
   discount: number;
 }
